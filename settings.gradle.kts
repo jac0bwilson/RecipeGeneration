@@ -31,3 +31,5 @@ dependencyResolutionManagement {
 
 include(":composeApp")
 include(":core:ui")
+
+include(":generation:ui")

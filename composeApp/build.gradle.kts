@@ -3,9 +3,9 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidApplication)
-    alias(libs.plugins.ksp)
     id("ktlint-convention")
     id("compose-convention")
+    id("koin-convention")
 }
 
 kotlin {
@@ -33,12 +33,9 @@ kotlin {
         commonMain.dependencies {
             implementation(libs.androidx.lifecycle.viewmodelCompose)
             implementation(libs.androidx.lifecycle.runtimeCompose)
-            implementation(libs.koin.annotations)
-            implementation(project.dependencies.platform(libs.koin.bom))
-            implementation(libs.koin.compose)
-            implementation(libs.koin.compose.viewmodel)
 
             implementation(project(":core:ui"))
+            implementation(project(":generation:ui"))
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
@@ -48,10 +45,6 @@ kotlin {
     sourceSets.commonMain.configure {
         kotlin.srcDir("build/generated/ksp/metadata/commonMain/kotlin")
     }
-}
-
-ksp {
-    arg("ksp.kotlin.multiplatform", "true")
 }
 
 android {
@@ -87,20 +80,5 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
-    }
-}
-
-dependencies {
-    add("kspCommonMainMetadata", libs.koin.ksp.compiler)
-    add("kspAndroid", libs.koin.ksp.compiler)
-    add("kspIosArm64", libs.koin.ksp.compiler)
-    add("kspIosSimulatorArm64", libs.koin.ksp.compiler)
-}
-
-afterEvaluate {
-    tasks.configureEach {
-        if (name.startsWith("ksp") && !name.contains("Metadata") && name.contains("Kotlin")) {
-            dependsOn("kspCommonMainKotlinMetadata")
-        }
     }
 }

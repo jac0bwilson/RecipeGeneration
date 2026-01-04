@@ -12,6 +12,10 @@ gradlePlugin {
             id = "compose-convention"
             implementationClass = "ComposeConventionPlugin"
         }
+        register("koin-convention") {
+            id = "koin-convention"
+            implementationClass = "KoinConventionPlugin"
+        }
     }
 }
 
