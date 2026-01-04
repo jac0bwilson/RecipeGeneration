@@ -1,3 +1,11 @@
+# RecipeGeneration
+
+A Compose Multiplatform project targeting Android and iOS.
+
+This project uses JetBrains' Koog library to generate recipes using AI - currently using Gemini 2.5 Flash.
+
+## Standard project template stuff
+
 This is a Kotlin Multiplatform project targeting Android, iOS.
 
 * [/composeApp](./composeApp/src) is for code that will be shared across your Compose Multiplatform applications.
