@@ -10,3 +10,11 @@ plugins {
     alias(libs.plugins.ksp) apply false
     alias(libs.plugins.ktlint) apply false
 }
+
+subprojects {
+    configurations.all {
+        resolutionStrategy {
+            force("org.jetbrains.kotlinx:kotlinx-datetime:0.7.1-0.6.x-compat")
+        }
+    }
+}

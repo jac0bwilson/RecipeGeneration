@@ -8,10 +8,12 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.systemBars
-import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
@@ -23,6 +25,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.resources.painterResource
@@ -45,18 +49,26 @@ internal fun InputLayout(
     submitButtonEnabled: Boolean,
     onSubmitInput: () -> Unit,
 ) {
-    Scaffold { internalPadding ->
+    Scaffold(
+        modifier = Modifier.fillMaxSize(),
+        contentWindowInsets = WindowInsets(0, 0, 0, 0),
+    ) { internalPadding ->
         Column(
             modifier =
                 Modifier
-                    .windowInsetsPadding(WindowInsets.systemBars)
+                    .imePadding()
                     .padding(internalPadding)
                     .padding(16.dp)
+                    .statusBarsPadding()
+                    .navigationBarsPadding()
                     .fillMaxSize(),
             verticalArrangement = Arrangement.spacedBy(24.dp),
         ) {
             HeadingSection()
-            InputSection(inputState)
+            InputSection(
+                inputState = inputState,
+                onSubmitInput = onSubmitInput,
+            )
 
             Spacer(Modifier.weight(1f))
 
@@ -83,7 +95,10 @@ private fun HeadingSection() {
 }
 
 @Composable
-private fun InputSection(inputState: TextFieldState) {
+private fun InputSection(
+    inputState: TextFieldState,
+    onSubmitInput: () -> Unit,
+) {
     TextField(
         state = inputState,
         modifier =
@@ -94,6 +109,14 @@ private fun InputSection(inputState: TextFieldState) {
             Text(stringResource(Res.string.input_placeholder))
         },
         shape = RoundedCornerShape(8.dp),
+        keyboardOptions =
+            KeyboardOptions(
+                capitalization = KeyboardCapitalization.Sentences,
+                imeAction = ImeAction.Go,
+            ),
+        onKeyboardAction = {
+            onSubmitInput()
+        },
     )
 }
 

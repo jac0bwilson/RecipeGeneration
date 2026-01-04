@@ -11,9 +11,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.systemBars
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AssistChip
@@ -77,13 +76,15 @@ fun RecipeDisplayLayout(
                         )
                     }
                 },
+                modifier = Modifier.statusBarsPadding(),
             )
         },
+        modifier = Modifier.fillMaxSize(),
+        contentWindowInsets = WindowInsets(0, 0, 0, 0),
     ) { internalPadding ->
         Column(
             modifier =
                 Modifier
-                    .windowInsetsPadding(WindowInsets.systemBars)
                     .padding(internalPadding)
                     .padding(16.dp)
                     .fillMaxSize()
