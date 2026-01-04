@@ -16,11 +16,17 @@ gradlePlugin {
             id = "koin-convention"
             implementationClass = "KoinConventionPlugin"
         }
+        register("buildKonfig-convention") {
+            id = "buildKonfig-convention"
+            implementationClass = "BuildKonfigConventionPlugin"
+        }
     }
 }
 
 dependencies {
-    implementation(libs.ktlint.gradle)
+    implementation(libs.buildKonfig.compiler)
+    implementation(libs.buildKonfig.gradle.plugin)
     implementation(libs.compose.gradle.plugin)
+    implementation(libs.ktlint.gradle)
     implementation(libs.kotlin.gradle.plugin)
 }

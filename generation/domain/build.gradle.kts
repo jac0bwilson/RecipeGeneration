@@ -1,8 +1,6 @@
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
-    alias(libs.plugins.serialization)
-    id("compose-convention")
     id("ktlint-convention")
     id("koin-convention")
 }
@@ -15,21 +13,25 @@ kotlin {
         iosSimulatorArm64(),
     ).forEach { iosTarget ->
         iosTarget.binaries.framework {
-            baseName = "GenerationUI"
+            baseName = "GenerationDomain"
             isStatic = true
         }
     }
 
     sourceSets {
         commonMain.dependencies {
-            implementation(project(":core:ui"))
-            implementation(project(":generation:domain"))
+            implementation(project(":generation:data"))
+        }
+        commonTest.dependencies {
+            implementation(libs.coroutines.test)
+            implementation(libs.kotlin.test)
+            implementation(libs.turbine)
         }
     }
 }
 
 android {
-    namespace = "uk.jacobw.recipe.generation.ui"
+    namespace = "uk.jacobw.recipe.generation.domain"
     compileSdk =
         libs.versions.android.compileSdk
             .get()

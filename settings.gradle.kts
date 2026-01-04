@@ -33,3 +33,5 @@ include(":composeApp")
 include(":core:ui")
 
 include(":generation:ui")
+include(":generation:domain")
+include(":generation:data")
