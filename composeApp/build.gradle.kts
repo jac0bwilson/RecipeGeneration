@@ -3,10 +3,9 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidApplication)
-    alias(libs.plugins.composeMultiplatform)
-    alias(libs.plugins.composeCompiler)
     alias(libs.plugins.ksp)
     id("ktlint-convention")
+    id("compose-convention")
 }
 
 kotlin {
@@ -32,12 +31,6 @@ kotlin {
             implementation(libs.androidx.activity.compose)
         }
         commonMain.dependencies {
-            implementation(compose.runtime)
-            implementation(compose.foundation)
-            implementation(compose.material3)
-            implementation(compose.ui)
-            implementation(compose.components.resources)
-            implementation(compose.components.uiToolingPreview)
             implementation(libs.androidx.lifecycle.viewmodelCompose)
             implementation(libs.androidx.lifecycle.runtimeCompose)
             implementation(libs.koin.annotations)
@@ -98,8 +91,6 @@ android {
 }
 
 dependencies {
-    debugImplementation(compose.uiTooling)
-
     add("kspCommonMainMetadata", libs.koin.ksp.compiler)
     add("kspAndroid", libs.koin.ksp.compiler)
     add("kspIosArm64", libs.koin.ksp.compiler)
