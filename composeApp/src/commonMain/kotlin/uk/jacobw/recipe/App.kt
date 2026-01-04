@@ -21,10 +21,9 @@ import org.jetbrains.compose.resources.painterResource
 import recipegeneration.composeapp.generated.resources.Res
 import recipegeneration.composeapp.generated.resources.compose_multiplatform
 
-@Suppress("ktlint:standard:function-naming")
 @Composable
-fun App(modifier: Modifier = Modifier) {
-    MaterialTheme {
+fun App() {
+    AppTheme {
         var showContent by remember { mutableStateOf(false) }
         Column(
             modifier =
