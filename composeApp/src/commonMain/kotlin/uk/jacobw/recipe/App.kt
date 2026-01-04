@@ -15,24 +15,37 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import org.koin.compose.KoinMultiplatformApplication
+import org.koin.core.annotation.KoinExperimentalAPI
+import org.koin.dsl.KoinConfiguration
+import org.koin.ksp.generated.module
+import uk.jacobw.recipe.AppModule
 
+@OptIn(KoinExperimentalAPI::class)
 @Composable
 fun App() {
-    AppTheme {
-        var showContent by remember { mutableStateOf(false) }
-        Column(
-            modifier =
-                Modifier
-                    .background(MaterialTheme.colorScheme.primaryContainer)
-                    .safeContentPadding()
-                    .fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            Button(onClick = { showContent = !showContent }) {
-                Text("Click me!")
-            }
-            AnimatedVisibility(showContent) {
-                Text("Hello world!")
+    KoinMultiplatformApplication(
+        config =
+            KoinConfiguration {
+                modules(AppModule().module)
+            },
+    ) {
+        AppTheme {
+            var showContent by remember { mutableStateOf(false) }
+            Column(
+                modifier =
+                    Modifier
+                        .background(MaterialTheme.colorScheme.primaryContainer)
+                        .safeContentPadding()
+                        .fillMaxSize(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                Button(onClick = { showContent = !showContent }) {
+                    Text("Click me!")
+                }
+                AnimatedVisibility(showContent) {
+                    Text("Hello world!")
+                }
             }
         }
     }
