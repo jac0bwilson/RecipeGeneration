@@ -1,4 +1,4 @@
-package uk.jacobw.recipe
+package uk.jacobw.recipe.core.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme

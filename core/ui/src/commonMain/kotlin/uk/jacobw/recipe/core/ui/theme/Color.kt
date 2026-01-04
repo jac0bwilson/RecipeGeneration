@@ -1,4 +1,4 @@
-package uk.jacobw.recipe
+package uk.jacobw.recipe.core.ui.theme
 import androidx.compose.ui.graphics.Color
 
 val primaryLight = Color(0xFF466730)

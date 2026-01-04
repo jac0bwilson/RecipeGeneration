@@ -1,5 +1,4 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import org.jetbrains.kotlin.gradle.tasks.AbstractKotlinCompileTool
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
@@ -7,7 +6,7 @@ plugins {
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.ksp)
-    alias(libs.plugins.ktlint)
+    id("ktlint-convention")
 }
 
 kotlin {
@@ -45,15 +44,21 @@ kotlin {
             implementation(project.dependencies.platform(libs.koin.bom))
             implementation(libs.koin.compose)
             implementation(libs.koin.compose.viewmodel)
+
+            implementation(project(":core:ui"))
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
         }
     }
 
-    sourceSets.named("commonMain").configure {
+    sourceSets.commonMain.configure {
         kotlin.srcDir("build/generated/ksp/metadata/commonMain/kotlin")
     }
+}
+
+ksp {
+    arg("ksp.kotlin.multiplatform", "true")
 }
 
 android {
@@ -92,22 +97,8 @@ android {
     }
 }
 
-ktlint {
-    version.set("1.5.0")
-    verbose.set(true)
-    outputToConsole.set(true)
-    coloredOutput.set(true)
-
-    filter {
-        exclude { element -> element.file.path.contains("resourceGenerator") }
-        exclude { element -> element.file.path.contains("/generated/") }
-        exclude { element -> element.file.path.contains("buildkonfig") }
-    }
-}
-
 dependencies {
     debugImplementation(compose.uiTooling)
-    ktlintRuleset(libs.ktlint.ruleset.compose)
 
     add("kspCommonMainMetadata", libs.koin.ksp.compiler)
     add("kspAndroid", libs.koin.ksp.compiler)
@@ -116,8 +107,8 @@ dependencies {
 }
 
 afterEvaluate {
-    tasks.withType<AbstractKotlinCompileTool<*>>().configureEach {
-        if (name.contains("ksp") && name.contains("Kotlin") && !name.contains("Metadata")) {
+    tasks.configureEach {
+        if (name.startsWith("ksp") && !name.contains("Metadata") && name.contains("Kotlin")) {
             dependsOn("kspCommonMainKotlinMetadata")
         }
     }

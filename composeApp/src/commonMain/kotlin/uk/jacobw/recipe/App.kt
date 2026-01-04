@@ -19,7 +19,7 @@ import org.koin.compose.KoinMultiplatformApplication
 import org.koin.core.annotation.KoinExperimentalAPI
 import org.koin.dsl.KoinConfiguration
 import org.koin.ksp.generated.module
-import uk.jacobw.recipe.AppModule
+import uk.jacobw.recipe.core.ui.theme.AppTheme
 
 @OptIn(KoinExperimentalAPI::class)
 @Composable
