@@ -1,6 +1,5 @@
 package uk.jacobw.recipe.generation.ui.display
 
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.koin.compose.viewmodel.koinViewModel
@@ -11,7 +10,7 @@ fun RecipeDisplayScreen(
     viewModel: RecipeDisplayViewModel = koinViewModel(),
 ) {
     when (val recipe = viewModel.recipe.collectAsStateWithLifecycle().value) {
-        null -> Text("Generating recipe...")
+        null -> RecipeDisplayLoadingLayout()
         else ->
             RecipeDisplayLayout(
                 recipe = recipe,

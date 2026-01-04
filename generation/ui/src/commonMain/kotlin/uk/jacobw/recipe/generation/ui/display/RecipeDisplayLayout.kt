@@ -1,6 +1,5 @@
 package uk.jacobw.recipe.generation.ui.display
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,7 +15,6 @@ import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.Card
@@ -32,7 +30,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -212,11 +210,15 @@ private fun InstructionsSection(instructions: List<Instruction>) {
                             .fillMaxWidth()
                             .padding(16.dp),
                 ) {
+                    val circleColor = MaterialTheme.colorScheme.primary
                     Box(
                         modifier =
-                            Modifier
-                                .clip(CircleShape)
-                                .background(MaterialTheme.colorScheme.primary),
+                            Modifier.drawBehind {
+                                drawCircle(
+                                    color = circleColor,
+                                    radius = size.maxDimension / 2.0f,
+                                )
+                            },
                     ) {
                         Text(
                             text = "${index + 1}.",
@@ -224,7 +226,7 @@ private fun InstructionsSection(instructions: List<Instruction>) {
                                 MaterialTheme.typography.bodyLarge.copy(
                                     color = MaterialTheme.colorScheme.onPrimary,
                                 ),
-                            modifier = Modifier.padding(8.dp),
+                            modifier = Modifier.padding(4.dp),
                         )
                     }
 
