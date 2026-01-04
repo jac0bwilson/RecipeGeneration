@@ -28,7 +28,7 @@ fun App() {
                 navController = navController,
                 startDestination = GenerationRoutes.Input,
             ) {
-                generationGraph()
+                generationGraph(navController)
             }
         }
     }

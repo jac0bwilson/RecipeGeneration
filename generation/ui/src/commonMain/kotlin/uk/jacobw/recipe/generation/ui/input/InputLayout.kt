@@ -23,7 +23,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.resources.painterResource
@@ -36,11 +35,16 @@ import recipegeneration.generation.ui.generated.resources.input_placeholder
 import recipegeneration.generation.ui.generated.resources.title_part_one
 import recipegeneration.generation.ui.generated.resources.title_part_two
 import recipegeneration.generation.ui.generated.resources.wand_stars_icon
+import uk.jacobw.recipe.core.ui.component.Title
 import uk.jacobw.recipe.core.ui.theme.AppTheme
 import uk.jacobw.recipe.core.ui.theme.preview.ThemeProvider
 
 @Composable
-internal fun InputLayout(inputState: TextFieldState) {
+internal fun InputLayout(
+    inputState: TextFieldState,
+    submitButtonEnabled: Boolean,
+    onSubmitInput: () -> Unit,
+) {
     Scaffold { internalPadding ->
         Column(
             modifier =
@@ -56,14 +60,17 @@ internal fun InputLayout(inputState: TextFieldState) {
 
             Spacer(Modifier.weight(1f))
 
-            SubmitSection()
+            SubmitSection(
+                enabled = submitButtonEnabled,
+                onClick = onSubmitInput,
+            )
         }
     }
 }
 
 @Composable
 private fun HeadingSection() {
-    Text(
+    Title(
         text =
             buildAnnotatedString {
                 append(stringResource(Res.string.title_part_one))
@@ -72,8 +79,6 @@ private fun HeadingSection() {
                     append(stringResource(Res.string.title_part_two))
                 }
             },
-        style = MaterialTheme.typography.displayMedium,
-        fontWeight = FontWeight.Bold,
     )
 }
 
@@ -93,9 +98,13 @@ private fun InputSection(inputState: TextFieldState) {
 }
 
 @Composable
-private fun SubmitSection() {
+private fun SubmitSection(
+    enabled: Boolean,
+    onClick: () -> Unit,
+) {
     Button(
-        onClick = {},
+        onClick = onClick,
+        enabled = enabled,
         modifier = Modifier.fillMaxWidth(),
     ) {
         Row(
@@ -122,6 +131,8 @@ private fun InputLayoutPreview(
     AppTheme(darkTheme) {
         InputLayout(
             inputState = TextFieldState(),
+            submitButtonEnabled = true,
+            onSubmitInput = {},
         )
     }
 }
