@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
@@ -33,7 +32,6 @@ import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.resources.painterResource
@@ -42,6 +40,7 @@ import org.jetbrains.compose.ui.tooling.preview.PreviewParameter
 import recipegeneration.generation.ui.generated.resources.Res
 import recipegeneration.generation.ui.generated.resources.arrow_back_icon
 import recipegeneration.generation.ui.generated.resources.brain_icon
+import recipegeneration.generation.ui.generated.resources.chat_icon
 import recipegeneration.generation.ui.generated.resources.check_icon
 import recipegeneration.generation.ui.generated.resources.groups_icon
 import recipegeneration.generation.ui.generated.resources.timer_icon
@@ -253,20 +252,31 @@ private fun InstructionsSection(instructions: List<Instruction>) {
 
 @Composable
 private fun CommentSection(comment: String) {
-    Column(
+    Card(
         modifier = Modifier.fillMaxWidth(),
     ) {
-        Spacer(Modifier.height(16.dp))
-
-        Card(
-            modifier = Modifier.fillMaxWidth(),
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            modifier = Modifier.padding(16.dp),
         ) {
-            Text(
-                text = comment,
-                style = MaterialTheme.typography.bodySmall,
-                textAlign = TextAlign.Center,
-                modifier = Modifier.padding(8.dp).fillMaxWidth(),
+            Icon(
+                painter = painterResource(Res.drawable.chat_icon),
+                contentDescription = null,
+                modifier = Modifier.padding(4.dp),
             )
+
+            Column(
+                verticalArrangement = Arrangement.spacedBy(4.dp),
+                modifier = Modifier.fillMaxWidth(),
+            ) {
+                Text(
+                    text = "Chef's Comment",
+                )
+                Text(
+                    text = comment,
+                )
+            }
         }
     }
 }
@@ -345,8 +355,7 @@ private fun RecipeDisplayLayoutPreview(
                                 detail =
                                     """
                                     Heat a non-stick pan over medium heat. Pour 1/4 cup of batter for each pancake.
-                                    Cook until bubbles form on the surface, then flip and cook until golden brown
-                                    on the other side.
+                                    Cook and then flip.
                                     """.trimIndent(),
                             ),
                         ),
