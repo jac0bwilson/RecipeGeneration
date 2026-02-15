@@ -25,6 +25,7 @@ import uk.jacobw.recipe.generation.ui.GenerationRoutes
 import uk.jacobw.recipe.generation.ui.generationGraph
 import uk.jacobw.recipe.generation.ui.getGenerationUiModules
 import uk.jacobw.recipe.recipedisplay.ui.RecipeDisplayRoutes
+import uk.jacobw.recipe.recipedisplay.ui.RecipeDisplaySource
 import uk.jacobw.recipe.recipedisplay.ui.getRecipeDisplayUiModules
 import uk.jacobw.recipe.recipedisplay.ui.recipeDisplayGraph
 
@@ -102,14 +103,24 @@ fun App() {
                         navController = navController,
                         onGeneratedRecipeCreated = { recipeId ->
                             selectedTab = RootTab.GENERATION
-                            navController.navigate(RecipeDisplayRoutes.Generated(recipeId))
+                            navController.navigate(
+                                RecipeDisplayRoutes.Recipe(
+                                    source = RecipeDisplaySource.GENERATED,
+                                    reference = recipeId,
+                                ),
+                            )
                         },
                     )
 
                     favouritesGraph(
                         onRecipeSelected = { contentHash ->
                             selectedTab = RootTab.FAVOURITES
-                            navController.navigate(RecipeDisplayRoutes.Favourite(contentHash))
+                            navController.navigate(
+                                RecipeDisplayRoutes.Recipe(
+                                    source = RecipeDisplaySource.FAVOURITE,
+                                    reference = contentHash,
+                                ),
+                            )
                         },
                     )
 

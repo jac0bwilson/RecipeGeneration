@@ -1,9 +1,10 @@
 package uk.jacobw.recipe.recipedisplay.ui.generated
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.toRoute
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
@@ -14,26 +15,30 @@ import uk.jacobw.recipe.recipedisplay.domain.model.RecipeReference
 import uk.jacobw.recipe.recipedisplay.domain.usecase.ObserveIsFavouriteUseCase
 import uk.jacobw.recipe.recipedisplay.domain.usecase.ObserveRecipeUseCase
 import uk.jacobw.recipe.recipedisplay.domain.usecase.ToggleFavouriteUseCase
+import uk.jacobw.recipe.recipedisplay.ui.RecipeDisplayRoutes
+import uk.jacobw.recipe.recipedisplay.ui.RecipeDisplaySource
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @KoinViewModel
 class RecipeDisplayViewModel(
+    savedStateHandle: SavedStateHandle,
     private val observeRecipe: ObserveRecipeUseCase,
     private val observeIsFavourite: ObserveIsFavouriteUseCase,
     private val toggleFavourite: ToggleFavouriteUseCase,
 ) : ViewModel() {
-    private val reference = MutableStateFlow<RecipeReference?>(null)
+    private val reference =
+        savedStateHandle
+            .toRoute<RecipeDisplayRoutes.Recipe>()
+            .toDomainReference()
+
+    val closesAfterFavouriteToggle = reference is RecipeReference.Favourite
 
     val recipe =
-        reference
-            .filterNotNull()
-            .flatMapLatest { recipeReference ->
-                observeRecipe(recipeReference)
-            }.stateIn(
-                scope = viewModelScope,
-                started = SharingStarted.WhileSubscribed(5_000),
-                initialValue = null,
-            )
+        observeRecipe(reference).stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5_000),
+            initialValue = null,
+        )
 
     val isFavourite =
         recipe
@@ -46,10 +51,6 @@ class RecipeDisplayViewModel(
                 initialValue = false,
             )
 
-    fun setReference(recipeReference: RecipeReference) {
-        reference.value = recipeReference
-    }
-
     fun onFavouriteClicked() {
         val currentRecipe = recipe.value ?: return
 
@@ -57,4 +58,10 @@ class RecipeDisplayViewModel(
             toggleFavourite(currentRecipe)
         }
     }
+
+    private fun RecipeDisplayRoutes.Recipe.toDomainReference(): RecipeReference =
+        when (source) {
+            RecipeDisplaySource.GENERATED -> RecipeReference.Generated(reference)
+            RecipeDisplaySource.FAVOURITE -> RecipeReference.Favourite(reference)
+        }
 }
