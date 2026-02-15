@@ -21,7 +21,7 @@ class KoinConventionPlugin : Plugin<Project> {
 
             val kmp = extensions.getByType<KotlinMultiplatformExtension>()
             val commonMain = kmp.sourceSets.getByName("commonMain")
-            commonMain.kotlin.srcDir("build/generated/ksp/metadata/commonMain/kotlin")
+            commonMain.kotlin.srcDir("build/generated/ksp/metadata/commonMain/kotlin/org/koin/ksp/generated")
 
             val koinKspCompiler = libs.findLibrary("koin.ksp.compiler").get()
 

@@ -60,7 +60,7 @@ class RecipeDisplayViewModel(
     }
 
     private fun RecipeDisplayRoutes.Recipe.toDomainReference(): RecipeReference =
-        when (source) {
+        when (RecipeDisplaySource.fromNavValue(source)) {
             RecipeDisplaySource.GENERATED -> RecipeReference.Generated(reference)
             RecipeDisplaySource.FAVOURITE -> RecipeReference.Favourite(reference)
         }

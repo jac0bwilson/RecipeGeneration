@@ -122,7 +122,7 @@ fun App() {
                             selectedTab = RootTab.GENERATION
                             navController.navigate(
                                 RecipeDisplayRoutes.Recipe(
-                                    source = RecipeDisplaySource.GENERATED,
+                                    source = RecipeDisplaySource.GENERATED.navValue,
                                     reference = recipeId,
                                 ),
                             )
@@ -134,7 +134,7 @@ fun App() {
                             selectedTab = RootTab.FAVOURITES
                             navController.navigate(
                                 RecipeDisplayRoutes.Recipe(
-                                    source = RecipeDisplaySource.FAVOURITE,
+                                    source = RecipeDisplaySource.FAVOURITE.navValue,
                                     reference = contentHash,
                                 ),
                             )

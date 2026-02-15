@@ -26,23 +26,6 @@ class RoomConventionPlugin : Plugin<Project> {
             extensions.configure(RoomExtension::class.java) {
                 schemaDirectory("$projectDir/schemas")
             }
-
-            val roomCompiler = libs.findLibrary("androidx.room.compiler").get()
-
-            afterEvaluate {
-                val roomKspConfigurations =
-                    listOf(
-                        "kspAndroid",
-                        "kspIosArm64",
-                        "kspIosSimulatorArm64",
-                    )
-
-                roomKspConfigurations.forEach { configName ->
-                    if (configurations.findByName(configName) != null) {
-                        dependencies.add(configName, roomCompiler)
-                    }
-                }
-            }
         }
     }
 }

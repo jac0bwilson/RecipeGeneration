@@ -30,6 +30,16 @@ fun NavGraphBuilder.recipeDisplayGraph(navController: NavController) {
 enum class RecipeDisplaySource {
     GENERATED,
     FAVOURITE,
+    ;
+
+    val navValue: String
+        get() = name.lowercase()
+
+    companion object {
+        fun fromNavValue(value: String): RecipeDisplaySource =
+            entries.firstOrNull { it.navValue == value }
+                ?: throw IllegalArgumentException("Unknown recipe display source: $value")
+    }
 }
 
 sealed class RecipeDisplayRoutes : NavigationRoute {
@@ -41,7 +51,7 @@ sealed class RecipeDisplayRoutes : NavigationRoute {
 
     @Serializable
     data class Recipe(
-        val source: RecipeDisplaySource,
+        val source: String,
         val reference: String,
     ) : RecipeDisplayRoutes()
 }
