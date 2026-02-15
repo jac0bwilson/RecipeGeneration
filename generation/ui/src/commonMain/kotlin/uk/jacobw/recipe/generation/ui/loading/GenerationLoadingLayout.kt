@@ -3,6 +3,7 @@ package uk.jacobw.recipe.generation.ui.loading
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CircularProgressIndicator
@@ -22,9 +23,14 @@ import uk.jacobw.recipe.core.ui.theme.preview.ThemeProvider
 
 @Composable
 fun GenerationLoadingLayout() {
-    Scaffold { internalPadding ->
+    Scaffold(
+        contentWindowInsets = WindowInsets(0, 0, 0, 0),
+    ) { internalPadding ->
         Box(
-            modifier = Modifier.fillMaxSize().padding(internalPadding),
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .padding(internalPadding),
             contentAlignment = Alignment.Center,
         ) {
             Column(

@@ -1,6 +1,10 @@
 package uk.jacobw.recipe
 
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.ime
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBars
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -12,6 +16,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalDensity
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import org.jetbrains.compose.resources.painterResource
@@ -59,62 +64,71 @@ fun App() {
         AppTheme {
             val navController = rememberNavController()
             var selectedTab by rememberSaveable { mutableStateOf(RootTab.GENERATION) }
+            val density = LocalDensity.current
+            val isImeVisible = WindowInsets.ime.getBottom(density) > 0
 
             Scaffold(
+                modifier = Modifier.fillMaxSize(),
+                contentWindowInsets = WindowInsets.systemBars,
                 bottomBar = {
-                    NavigationBar {
-                        NavigationBarItem(
-                            selected = selectedTab == RootTab.GENERATION,
-                            onClick = {
-                                selectedTab = RootTab.GENERATION
-                                navController.navigate(GenerationRoutes.Root) {
-                                    launchSingleTop = true
-                                    restoreState = true
-                                    popUpTo(navController.graph.startDestinationId) {
-                                        saveState = true
+                    if (!isImeVisible) {
+                        NavigationBar {
+                            NavigationBarItem(
+                                selected = selectedTab == RootTab.GENERATION,
+                                onClick = {
+                                    selectedTab = RootTab.GENERATION
+                                    navController.navigate(GenerationRoutes.Root) {
+                                        launchSingleTop = true
+                                        restoreState = true
+                                        popUpTo(navController.graph.startDestinationId) {
+                                            saveState = true
+                                        }
                                     }
-                                }
-                            },
-                            icon = {
-                                Icon(
-                                    painter = painterResource(CoreRes.drawable.wand_stars_icon),
-                                    contentDescription = stringResource(ComposeAppRes.string.tab_generation_icon_content_description),
-                                )
-                            },
-                            label = {
-                                Text(stringResource(ComposeAppRes.string.tab_generation_label))
-                            },
-                        )
+                                },
+                                icon = {
+                                    Icon(
+                                        painter = painterResource(CoreRes.drawable.wand_stars_icon),
+                                        contentDescription = stringResource(ComposeAppRes.string.tab_generation_icon_content_description),
+                                    )
+                                },
+                                label = {
+                                    Text(stringResource(ComposeAppRes.string.tab_generation_label))
+                                },
+                            )
 
-                        NavigationBarItem(
-                            selected = selectedTab == RootTab.FAVOURITES,
-                            onClick = {
-                                selectedTab = RootTab.FAVOURITES
-                                navController.navigate(FavouritesRoutes.Root) {
-                                    launchSingleTop = true
-                                    restoreState = true
-                                    popUpTo(navController.graph.startDestinationId) {
-                                        saveState = true
+                            NavigationBarItem(
+                                selected = selectedTab == RootTab.FAVOURITES,
+                                onClick = {
+                                    selectedTab = RootTab.FAVOURITES
+                                    navController.navigate(FavouritesRoutes.Root) {
+                                        launchSingleTop = true
+                                        restoreState = true
+                                        popUpTo(navController.graph.startDestinationId) {
+                                            saveState = true
+                                        }
                                     }
-                                }
-                            },
-                            icon = {
-                                Icon(
-                                    painter = painterResource(CoreRes.drawable.favourite_icon),
-                                    contentDescription = stringResource(ComposeAppRes.string.tab_favourites_icon_content_description),
-                                )
-                            },
-                            label = {
-                                Text(stringResource(ComposeAppRes.string.tab_favourites_label))
-                            },
-                        )
+                                },
+                                icon = {
+                                    Icon(
+                                        painter = painterResource(CoreRes.drawable.favourite_icon),
+                                        contentDescription = stringResource(ComposeAppRes.string.tab_favourites_icon_content_description),
+                                    )
+                                },
+                                label = {
+                                    Text(stringResource(ComposeAppRes.string.tab_favourites_label))
+                                },
+                            )
+                        }
                     }
                 },
             ) { innerPadding ->
                 NavHost(
                     navController = navController,
                     startDestination = GenerationRoutes.Root,
-                    modifier = Modifier.padding(innerPadding),
+                    modifier =
+                        Modifier
+                            .fillMaxSize()
+                            .padding(innerPadding),
                 ) {
                     generationGraph(
                         navController = navController,

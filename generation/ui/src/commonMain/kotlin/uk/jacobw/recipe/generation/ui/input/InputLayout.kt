@@ -3,15 +3,12 @@ package uk.jacobw.recipe.generation.ui.input
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.imePadding
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.text.input.TextFieldState
@@ -53,15 +50,22 @@ internal fun InputLayout(
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         contentWindowInsets = WindowInsets(0, 0, 0, 0),
+        bottomBar = {
+            SubmitSection(
+                enabled = submitButtonEnabled,
+                onClick = onSubmitInput,
+                modifier =
+                    Modifier
+                        .padding(16.dp)
+                        .imePadding(),
+            )
+        },
     ) { internalPadding ->
         Column(
             modifier =
                 Modifier
-                    .imePadding()
                     .padding(internalPadding)
                     .padding(16.dp)
-                    .statusBarsPadding()
-                    .navigationBarsPadding()
                     .fillMaxSize(),
             verticalArrangement = Arrangement.spacedBy(24.dp),
         ) {
@@ -69,13 +73,6 @@ internal fun InputLayout(
             InputSection(
                 inputState = inputState,
                 onSubmitInput = onSubmitInput,
-            )
-
-            Spacer(Modifier.weight(1f))
-
-            SubmitSection(
-                enabled = submitButtonEnabled,
-                onClick = onSubmitInput,
             )
         }
     }
@@ -125,11 +122,12 @@ private fun InputSection(
 private fun SubmitSection(
     enabled: Boolean,
     onClick: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     Button(
         onClick = onClick,
         enabled = enabled,
-        modifier = Modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxWidth(),
     ) {
         Row(
             modifier = Modifier.padding(vertical = 8.dp),

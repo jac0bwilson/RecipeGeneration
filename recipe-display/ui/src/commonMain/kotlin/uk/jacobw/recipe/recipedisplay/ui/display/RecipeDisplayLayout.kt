@@ -83,6 +83,7 @@ fun RecipeDisplayLayout(
         topBar = {
             TopAppBar(
                 title = {},
+                windowInsets = WindowInsets(0, 0, 0, 0),
                 navigationIcon = {
                     IconButton(
                         onClick = onBackClick,
