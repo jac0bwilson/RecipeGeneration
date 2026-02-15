@@ -1,0 +1,17 @@
+<resources>
+    <string name="recipe_display_back_content_description">Back</string>
+    <string name="recipe_display_favourite_save_content_description">Save recipe</string>
+    <string name="recipe_display_favourite_saved_content_description">Recipe saved</string>
+    <string name="recipe_display_servings_count">%1$d servings</string>
+    <string name="recipe_display_ingredients_title">Ingredients</string>
+    <string name="recipe_display_items_count">%1$d items</string>
+    <string name="recipe_display_instructions_title">Instructions</string>
+    <string name="recipe_display_comment_title">Chef's Comment</string>
+    <string name="recipe_display_duration_hours">%1$d h</string>
+    <string name="recipe_display_duration_minutes">%1$d min</string>
+    <string name="recipe_display_not_found_title">Recipe not found</string>
+    <string name="recipe_display_not_found_hint">Tap Back to return</string>
+    <string name="recipe_display_difficulty_easy">Easy</string>
+    <string name="recipe_display_difficulty_medium">Medium</string>
+    <string name="recipe_display_difficulty_hard">Hard</string>
+</resources>

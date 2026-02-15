@@ -1,0 +1,6 @@
+<resources>
+    <string name="tab_generation_label">Generation</string>
+    <string name="tab_favourites_label">Favourites</string>
+    <string name="tab_generation_icon_content_description">Generation tab icon</string>
+    <string name="tab_favourites_icon_content_description">Favourites tab icon</string>
+</resources>

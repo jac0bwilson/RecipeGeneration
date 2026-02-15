@@ -12,8 +12,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.jetbrains.compose.ui.tooling.preview.PreviewParameter
+import recipegeneration.generation.ui.generated.resources.Res
+import recipegeneration.generation.ui.generated.resources.generation_loading_message
 import uk.jacobw.recipe.core.ui.theme.AppTheme
 import uk.jacobw.recipe.core.ui.theme.preview.ThemeProvider
 
@@ -30,7 +33,7 @@ fun GenerationLoadingLayout() {
             ) {
                 CircularProgressIndicator()
 
-                Text("Cooking up your recipe...")
+                Text(stringResource(Res.string.generation_loading_message))
             }
         }
     }

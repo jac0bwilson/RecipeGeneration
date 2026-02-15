@@ -5,6 +5,10 @@ plugins {
     id("ktlint-convention")
 }
 
+compose.resources {
+    publicResClass = true
+}
+
 kotlin {
     androidTarget()
 

@@ -18,6 +18,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -27,12 +28,38 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
+import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.jetbrains.compose.ui.tooling.preview.PreviewParameter
+import recipegeneration.core.ui.generated.resources.arrow_back_icon
+import recipegeneration.core.ui.generated.resources.favourite_filled_icon
+import recipegeneration.core.ui.generated.resources.favourite_icon
+import recipegeneration.core.ui.generated.resources.Res as CoreRes
+import recipegeneration.recipe_display.ui.generated.resources.Res
+import recipegeneration.recipe_display.ui.generated.resources.brain_icon
+import recipegeneration.recipe_display.ui.generated.resources.chat_icon
+import recipegeneration.recipe_display.ui.generated.resources.check_icon
+import recipegeneration.recipe_display.ui.generated.resources.groups_icon
+import recipegeneration.recipe_display.ui.generated.resources.recipe_display_back_content_description
+import recipegeneration.recipe_display.ui.generated.resources.recipe_display_comment_title
+import recipegeneration.recipe_display.ui.generated.resources.recipe_display_difficulty_easy
+import recipegeneration.recipe_display.ui.generated.resources.recipe_display_difficulty_hard
+import recipegeneration.recipe_display.ui.generated.resources.recipe_display_difficulty_medium
+import recipegeneration.recipe_display.ui.generated.resources.recipe_display_duration_hours
+import recipegeneration.recipe_display.ui.generated.resources.recipe_display_duration_minutes
+import recipegeneration.recipe_display.ui.generated.resources.recipe_display_favourite_save_content_description
+import recipegeneration.recipe_display.ui.generated.resources.recipe_display_favourite_saved_content_description
+import recipegeneration.recipe_display.ui.generated.resources.recipe_display_ingredients_title
+import recipegeneration.recipe_display.ui.generated.resources.recipe_display_instructions_title
+import recipegeneration.recipe_display.ui.generated.resources.recipe_display_items_count
+import recipegeneration.recipe_display.ui.generated.resources.recipe_display_servings_count
+import recipegeneration.recipe_display.ui.generated.resources.timer_icon
 import uk.jacobw.recipe.core.ui.component.Title
 import uk.jacobw.recipe.core.ui.theme.AppTheme
 import uk.jacobw.recipe.core.ui.theme.preview.ThemeProvider
@@ -60,15 +87,37 @@ fun RecipeDisplayLayout(
                     IconButton(
                         onClick = onBackClick,
                     ) {
-                        Text("Back")
+                        Icon(
+                            painter = painterResource(CoreRes.drawable.arrow_back_icon),
+                            contentDescription = stringResource(Res.string.recipe_display_back_content_description),
+                        )
                     }
                 },
                 actions = {
                     IconButton(
                         onClick = onFavouriteClick,
                     ) {
-                        Text(
-                            text = if (isFavourite) "Saved" else "Save",
+                        Icon(
+                            painter =
+                                painterResource(
+                                    if (isFavourite) {
+                                        CoreRes.drawable.favourite_filled_icon
+                                    } else {
+                                        CoreRes.drawable.favourite_icon
+                                    },
+                                ),
+                            contentDescription =
+                                if (isFavourite) {
+                                    stringResource(Res.string.recipe_display_favourite_saved_content_description)
+                                } else {
+                                    stringResource(Res.string.recipe_display_favourite_save_content_description)
+                                },
+                            tint =
+                                if (isFavourite) {
+                                    MaterialTheme.colorScheme.primary
+                                } else {
+                                    MaterialTheme.colorScheme.onSurfaceVariant
+                                },
                         )
                     }
                 },
@@ -128,14 +177,17 @@ private fun InfoSummarySection(
     ) {
         InfoChip(
             content = duration.toReadableString(),
+            icon = painterResource(Res.drawable.timer_icon),
         )
 
         InfoChip(
-            content = difficulty.name.lowercase().replaceFirstChar { it.uppercase() },
+            content = difficulty.toReadableString(),
+            icon = painterResource(Res.drawable.brain_icon),
         )
 
         InfoChip(
-            content = "$servings servings",
+            content = stringResource(Res.string.recipe_display_servings_count, servings),
+            icon = painterResource(Res.drawable.groups_icon),
         )
     }
 }
@@ -151,12 +203,12 @@ private fun IngredientsSection(ingredients: List<DisplayIngredient>) {
             verticalAlignment = Alignment.Bottom,
         ) {
             Text(
-                text = "Ingredients",
+                text = stringResource(Res.string.recipe_display_ingredients_title),
                 style = MaterialTheme.typography.titleLarge,
             )
 
             Text(
-                text = "${ingredients.size} items",
+                text = stringResource(Res.string.recipe_display_items_count, ingredients.size),
                 style =
                     MaterialTheme.typography.bodyLarge.copy(
                         color = MaterialTheme.colorScheme.primary,
@@ -172,6 +224,7 @@ private fun IngredientsSection(ingredients: List<DisplayIngredient>) {
             ingredients.forEach { ingredient ->
                 InfoChip(
                     content = ingredient.quantity + " " + ingredient.name,
+                    icon = painterResource(Res.drawable.check_icon),
                 )
             }
         }
@@ -184,7 +237,7 @@ private fun InstructionsSection(instructions: List<DisplayInstruction>) {
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         Text(
-            text = "Instructions",
+            text = stringResource(Res.string.recipe_display_instructions_title),
             style = MaterialTheme.typography.titleLarge,
         )
 
@@ -247,22 +300,37 @@ private fun CommentSection(comment: String) {
     Card(
         modifier = Modifier.fillMaxWidth(),
     ) {
-        Column(
-            verticalArrangement = Arrangement.spacedBy(4.dp),
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
             modifier = Modifier.padding(16.dp),
         ) {
-            Text(
-                text = "Chef's Comment",
+            Icon(
+                painter = painterResource(Res.drawable.chat_icon),
+                contentDescription = null,
+                modifier = Modifier.padding(4.dp),
             )
-            Text(
-                text = comment,
-            )
+
+            Column(
+                verticalArrangement = Arrangement.spacedBy(4.dp),
+                modifier = Modifier.fillMaxWidth(),
+            ) {
+                Text(
+                    text = stringResource(Res.string.recipe_display_comment_title),
+                )
+                Text(
+                    text = comment,
+                )
+            }
         }
     }
 }
 
 @Composable
-private fun InfoChip(content: String) {
+private fun InfoChip(
+    content: String,
+    icon: Painter? = null,
+) {
     AssistChip(
         onClick = {},
         label = {
@@ -271,14 +339,37 @@ private fun InfoChip(content: String) {
                 style = MaterialTheme.typography.bodyLarge,
             )
         },
+        leadingIcon =
+            icon?.let { resolvedIcon ->
+                {
+                    Icon(
+                        painter = resolvedIcon,
+                        contentDescription = null,
+                    )
+                }
+            },
     )
 }
 
+@Composable
 private fun DisplayDuration.toReadableString(): String {
-    val hoursPart = if (hours > 0) "$hours h " else ""
-    val minutesPart = if (minutes > 0) "$minutes min" else ""
-    return (hoursPart + minutesPart).trim()
+    val parts = mutableListOf<String>()
+    if (hours > 0) {
+        parts += stringResource(Res.string.recipe_display_duration_hours, hours)
+    }
+    if (minutes > 0) {
+        parts += stringResource(Res.string.recipe_display_duration_minutes, minutes)
+    }
+    return parts.joinToString(" ")
 }
+
+@Composable
+private fun DisplayDifficulty.toReadableString(): String =
+    when (this) {
+        DisplayDifficulty.EASY -> stringResource(Res.string.recipe_display_difficulty_easy)
+        DisplayDifficulty.MEDIUM -> stringResource(Res.string.recipe_display_difficulty_medium)
+        DisplayDifficulty.HARD -> stringResource(Res.string.recipe_display_difficulty_hard)
+    }
 
 @Preview
 @Composable

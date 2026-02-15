@@ -33,12 +33,13 @@ import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.jetbrains.compose.ui.tooling.preview.PreviewParameter
+import recipegeneration.core.ui.generated.resources.Res as CoreRes
+import recipegeneration.core.ui.generated.resources.wand_stars_icon
 import recipegeneration.generation.ui.generated.resources.Res
 import recipegeneration.generation.ui.generated.resources.generate_button
 import recipegeneration.generation.ui.generated.resources.input_placeholder
 import recipegeneration.generation.ui.generated.resources.title_part_one
 import recipegeneration.generation.ui.generated.resources.title_part_two
-import recipegeneration.generation.ui.generated.resources.wand_stars_icon
 import uk.jacobw.recipe.core.ui.component.Title
 import uk.jacobw.recipe.core.ui.theme.AppTheme
 import uk.jacobw.recipe.core.ui.theme.preview.ThemeProvider
@@ -135,7 +136,7 @@ private fun SubmitSection(
             horizontalArrangement = Arrangement.spacedBy(4.dp),
         ) {
             Icon(
-                painter = painterResource(Res.drawable.wand_stars_icon),
+                painter = painterResource(CoreRes.drawable.wand_stars_icon),
                 contentDescription = null,
             )
             Text(

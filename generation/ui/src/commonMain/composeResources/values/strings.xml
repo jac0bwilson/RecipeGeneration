@@ -3,4 +3,5 @@
     <string name="title_part_two"> cooking?</string>
     <string name="input_placeholder">I have chicken, mushrooms and cream - make me something tasty!</string>
     <string name="generate_button">Generate Recipe</string>
+    <string name="generation_loading_message">Cooking up your recipe...</string>
 </resources>

@@ -1,6 +1,7 @@
 package uk.jacobw.recipe
 
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
@@ -13,10 +14,20 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
+import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.KoinMultiplatformApplication
 import org.koin.core.annotation.KoinExperimentalAPI
 import org.koin.dsl.KoinConfiguration
 import org.koin.ksp.generated.module
+import recipegeneration.composeapp.generated.resources.Res as ComposeAppRes
+import recipegeneration.composeapp.generated.resources.tab_favourites_icon_content_description
+import recipegeneration.composeapp.generated.resources.tab_favourites_label
+import recipegeneration.composeapp.generated.resources.tab_generation_icon_content_description
+import recipegeneration.composeapp.generated.resources.tab_generation_label
+import recipegeneration.core.ui.generated.resources.Res as CoreRes
+import recipegeneration.core.ui.generated.resources.favourite_icon
+import recipegeneration.core.ui.generated.resources.wand_stars_icon
 import uk.jacobw.recipe.core.ui.theme.AppTheme
 import uk.jacobw.recipe.favourites.ui.FavouritesRoutes
 import uk.jacobw.recipe.favourites.ui.favouritesGraph
@@ -65,10 +76,13 @@ fun App() {
                                 }
                             },
                             icon = {
-                                Text("G")
+                                Icon(
+                                    painter = painterResource(CoreRes.drawable.wand_stars_icon),
+                                    contentDescription = stringResource(ComposeAppRes.string.tab_generation_icon_content_description),
+                                )
                             },
                             label = {
-                                Text("Generation")
+                                Text(stringResource(ComposeAppRes.string.tab_generation_label))
                             },
                         )
 
@@ -85,10 +99,13 @@ fun App() {
                                 }
                             },
                             icon = {
-                                Text("F")
+                                Icon(
+                                    painter = painterResource(CoreRes.drawable.favourite_icon),
+                                    contentDescription = stringResource(ComposeAppRes.string.tab_favourites_icon_content_description),
+                                )
                             },
                             label = {
-                                Text("Favourites")
+                                Text(stringResource(ComposeAppRes.string.tab_favourites_label))
                             },
                         )
                     }

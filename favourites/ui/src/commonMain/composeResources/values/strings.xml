@@ -1,0 +1,7 @@
+<resources>
+    <string name="favourites_title">Favourites</string>
+    <string name="favourites_servings_count">%1$d servings</string>
+    <string name="favourites_remove">Remove</string>
+    <string name="favourites_empty_title">No saved recipes yet.</string>
+    <string name="favourites_empty_description">Generate a recipe and tap Save to add it here.</string>
+</resources>

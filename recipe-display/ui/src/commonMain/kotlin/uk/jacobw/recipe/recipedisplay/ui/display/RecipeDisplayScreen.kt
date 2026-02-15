@@ -9,9 +9,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.material3.Text
+import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.jetbrains.compose.ui.tooling.preview.PreviewParameter
 import org.koin.compose.viewmodel.koinViewModel
+import recipegeneration.recipe_display.ui.generated.resources.Res
+import recipegeneration.recipe_display.ui.generated.resources.recipe_display_not_found_hint
+import recipegeneration.recipe_display.ui.generated.resources.recipe_display_not_found_title
 import uk.jacobw.recipe.core.ui.theme.AppTheme
 import uk.jacobw.recipe.core.ui.theme.preview.ThemeProvider
 import uk.jacobw.recipe.recipedisplay.ui.toUiModel
@@ -50,8 +54,8 @@ private fun RecipeNotFoundLayout() {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Text("Recipe not found")
-        Text("Tap Back to return")
+        Text(stringResource(Res.string.recipe_display_not_found_title))
+        Text(stringResource(Res.string.recipe_display_not_found_hint))
     }
 }
 
