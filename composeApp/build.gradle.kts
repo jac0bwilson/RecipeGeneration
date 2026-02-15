@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidApplication)
+    alias(libs.plugins.serialization)
     id("ktlint-convention")
     id("compose-convention")
     id("koin-convention")
@@ -35,7 +36,11 @@ kotlin {
             implementation(libs.androidx.lifecycle.runtimeCompose)
 
             implementation(project(":core:ui"))
+            implementation(project(":favourites:domain"))
+            implementation(project(":favourites:ui"))
+            implementation(project(":generation:domain"))
             implementation(project(":generation:ui"))
+            implementation(project(":recipe-display:ui"))
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

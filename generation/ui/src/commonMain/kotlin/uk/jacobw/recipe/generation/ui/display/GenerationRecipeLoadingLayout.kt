@@ -18,7 +18,7 @@ import uk.jacobw.recipe.core.ui.theme.AppTheme
 import uk.jacobw.recipe.core.ui.theme.preview.ThemeProvider
 
 @Composable
-fun RecipeDisplayLoadingLayout() {
+fun GenerationRecipeLoadingLayout() {
     Scaffold { internalPadding ->
         Box(
             modifier = Modifier.fillMaxSize().padding(internalPadding),
@@ -38,10 +38,10 @@ fun RecipeDisplayLoadingLayout() {
 
 @Preview
 @Composable
-private fun RecipeDisplayLoadingLayoutPreview(
+private fun GenerationRecipeLoadingLayoutPreview(
     @PreviewParameter(ThemeProvider::class) darkTheme: Boolean,
 ) {
     AppTheme(darkTheme) {
-        RecipeDisplayLoadingLayout()
+        GenerationRecipeLoadingLayout()
     }
 }

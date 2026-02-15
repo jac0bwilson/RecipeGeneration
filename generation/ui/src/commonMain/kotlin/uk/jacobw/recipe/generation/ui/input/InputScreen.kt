@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.collectLatest
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
-internal fun InputScreen(
+fun InputScreen(
     submitPrompt: (String) -> Unit,
     viewModel: InputViewModel = koinViewModel(),
 ) {

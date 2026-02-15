@@ -20,6 +20,10 @@ gradlePlugin {
             id = "buildKonfig-convention"
             implementationClass = "BuildKonfigConventionPlugin"
         }
+        register("room-convention") {
+            id = "room-convention"
+            implementationClass = "RoomConventionPlugin"
+        }
     }
 }
 
@@ -29,4 +33,5 @@ dependencies {
     implementation(libs.compose.gradle.plugin)
     implementation(libs.ktlint.gradle)
     implementation(libs.kotlin.gradle.plugin)
+    implementation(libs.room.gradle.plugin)
 }

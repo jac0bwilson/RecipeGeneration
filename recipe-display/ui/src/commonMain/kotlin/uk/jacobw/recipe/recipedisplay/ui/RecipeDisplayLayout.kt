@@ -1,4 +1,4 @@
-package uk.jacobw.recipe.generation.ui.display
+package uk.jacobw.recipe.recipedisplay.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -19,7 +18,6 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -29,35 +27,23 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
-import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.jetbrains.compose.ui.tooling.preview.PreviewParameter
-import recipegeneration.generation.ui.generated.resources.Res
-import recipegeneration.generation.ui.generated.resources.arrow_back_icon
-import recipegeneration.generation.ui.generated.resources.brain_icon
-import recipegeneration.generation.ui.generated.resources.chat_icon
-import recipegeneration.generation.ui.generated.resources.check_icon
-import recipegeneration.generation.ui.generated.resources.groups_icon
-import recipegeneration.generation.ui.generated.resources.timer_icon
 import uk.jacobw.recipe.core.ui.component.Title
 import uk.jacobw.recipe.core.ui.theme.AppTheme
 import uk.jacobw.recipe.core.ui.theme.preview.ThemeProvider
-import uk.jacobw.recipe.generation.domain.model.Difficulty
-import uk.jacobw.recipe.generation.domain.model.Duration
-import uk.jacobw.recipe.generation.domain.model.Ingredient
-import uk.jacobw.recipe.generation.domain.model.Instruction
-import uk.jacobw.recipe.generation.domain.model.Recipe
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RecipeDisplayLayout(
-    recipe: Recipe,
-    onNavigationIconClick: () -> Unit,
+    recipe: DisplayRecipe,
+    isFavourite: Boolean,
+    onBackClick: () -> Unit,
+    onFavouriteClick: () -> Unit,
 ) {
     val scrollState = rememberScrollState()
 
@@ -67,15 +53,20 @@ fun RecipeDisplayLayout(
                 title = {},
                 navigationIcon = {
                     IconButton(
-                        onClick = onNavigationIconClick,
+                        onClick = onBackClick,
                     ) {
-                        Icon(
-                            painter = painterResource(Res.drawable.arrow_back_icon),
-                            contentDescription = "Back",
+                        Text("Back")
+                    }
+                },
+                actions = {
+                    IconButton(
+                        onClick = onFavouriteClick,
+                    ) {
+                        Text(
+                            text = if (isFavourite) "Saved" else "Save",
                         )
                     }
                 },
-                modifier = Modifier.statusBarsPadding(),
             )
         },
         modifier = Modifier.fillMaxSize(),
@@ -123,8 +114,8 @@ private fun HeadingSection(title: String) {
 
 @Composable
 private fun InfoSummarySection(
-    duration: Duration,
-    difficulty: Difficulty,
+    duration: DisplayDuration,
+    difficulty: DisplayDifficulty,
     servings: Int,
 ) {
     FlowRow(
@@ -132,23 +123,20 @@ private fun InfoSummarySection(
     ) {
         InfoChip(
             content = duration.toReadableString(),
-            icon = painterResource(Res.drawable.timer_icon),
         )
 
         InfoChip(
             content = difficulty.name.lowercase().replaceFirstChar { it.uppercase() },
-            icon = painterResource(Res.drawable.brain_icon),
         )
 
         InfoChip(
             content = "$servings servings",
-            icon = painterResource(Res.drawable.groups_icon),
         )
     }
 }
 
 @Composable
-private fun IngredientsSection(ingredients: List<Ingredient>) {
+private fun IngredientsSection(ingredients: List<DisplayIngredient>) {
     Column(
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
@@ -179,7 +167,6 @@ private fun IngredientsSection(ingredients: List<Ingredient>) {
             ingredients.forEach { ingredient ->
                 InfoChip(
                     content = ingredient.quantity + " " + ingredient.name,
-                    icon = painterResource(Res.drawable.check_icon),
                 )
             }
         }
@@ -187,7 +174,7 @@ private fun IngredientsSection(ingredients: List<Ingredient>) {
 }
 
 @Composable
-private fun InstructionsSection(instructions: List<Instruction>) {
+private fun InstructionsSection(instructions: List<DisplayInstruction>) {
     Column(
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
@@ -255,37 +242,22 @@ private fun CommentSection(comment: String) {
     Card(
         modifier = Modifier.fillMaxWidth(),
     ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
+        Column(
+            verticalArrangement = Arrangement.spacedBy(4.dp),
             modifier = Modifier.padding(16.dp),
         ) {
-            Icon(
-                painter = painterResource(Res.drawable.chat_icon),
-                contentDescription = null,
-                modifier = Modifier.padding(4.dp),
+            Text(
+                text = "Chef's Comment",
             )
-
-            Column(
-                verticalArrangement = Arrangement.spacedBy(4.dp),
-                modifier = Modifier.fillMaxWidth(),
-            ) {
-                Text(
-                    text = "Chef's Comment",
-                )
-                Text(
-                    text = comment,
-                )
-            }
+            Text(
+                text = comment,
+            )
         }
     }
 }
 
 @Composable
-private fun InfoChip(
-    content: String,
-    icon: Painter,
-) {
+private fun InfoChip(content: String) {
     AssistChip(
         onClick = {},
         label = {
@@ -294,16 +266,10 @@ private fun InfoChip(
                 style = MaterialTheme.typography.bodyLarge,
             )
         },
-        leadingIcon = {
-            Icon(
-                painter = icon,
-                contentDescription = null,
-            )
-        },
     )
 }
 
-private fun Duration.toReadableString(): String {
+private fun DisplayDuration.toReadableString(): String {
     val hoursPart = if (hours > 0) "$hours h " else ""
     val minutesPart = if (minutes > 0) "$minutes min" else ""
     return (hoursPart + minutesPart).trim()
@@ -317,28 +283,28 @@ private fun RecipeDisplayLayoutPreview(
     AppTheme(darkTheme) {
         RecipeDisplayLayout(
             recipe =
-                Recipe(
+                DisplayRecipe(
                     title = "Pancakes",
                     estimatedDuration =
-                        Duration(
+                        DisplayDuration(
                             hours = 0,
                             minutes = 20,
                         ),
-                    difficulty = Difficulty.EASY,
+                    difficulty = DisplayDifficulty.EASY,
                     servings = 2,
                     ingredients =
                         listOf(
-                            Ingredient(
+                            DisplayIngredient(
                                 name = "Flour",
                                 quantity = "200g",
                                 commonAllergen = true,
                             ),
-                            Ingredient(
+                            DisplayIngredient(
                                 name = "Milk",
                                 quantity = "300ml",
                                 commonAllergen = true,
                             ),
-                            Ingredient(
+                            DisplayIngredient(
                                 name = "Eggs",
                                 quantity = "2",
                                 commonAllergen = false,
@@ -346,11 +312,11 @@ private fun RecipeDisplayLayoutPreview(
                         ),
                     instructions =
                         listOf(
-                            Instruction(
+                            DisplayInstruction(
                                 title = "Mix Ingredients",
                                 detail = "In a large bowl, whisk together the flour, milk, and eggs until smooth.",
                             ),
-                            Instruction(
+                            DisplayInstruction(
                                 title = "Cook Pancakes",
                                 detail =
                                     """
@@ -361,7 +327,9 @@ private fun RecipeDisplayLayoutPreview(
                         ),
                     comment = "A simple pancake recipe",
                 ),
-            onNavigationIconClick = {},
+            isFavourite = false,
+            onBackClick = {},
+            onFavouriteClick = {},
         )
     }
 }

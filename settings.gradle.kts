@@ -35,3 +35,9 @@ include(":core:ui")
 include(":generation:ui")
 include(":generation:domain")
 include(":generation:data")
+
+include(":recipe-display:ui")
+
+include(":favourites:data")
+include(":favourites:domain")
+include(":favourites:ui")
