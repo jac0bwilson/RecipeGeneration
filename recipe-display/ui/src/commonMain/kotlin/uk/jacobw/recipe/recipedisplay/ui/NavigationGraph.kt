@@ -6,7 +6,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import kotlinx.serialization.Serializable
 import uk.jacobw.recipe.core.ui.navigation.NavigationRoute
-import uk.jacobw.recipe.recipedisplay.ui.generated.RecipeDisplayScreen
+import uk.jacobw.recipe.recipedisplay.ui.display.RecipeDisplayScreen
 
 fun NavGraphBuilder.recipeDisplayGraph(
     navController: NavController,

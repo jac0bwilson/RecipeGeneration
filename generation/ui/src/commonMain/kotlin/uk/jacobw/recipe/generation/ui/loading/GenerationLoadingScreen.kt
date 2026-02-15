@@ -5,7 +5,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.koin.compose.viewmodel.koinViewModel
-import uk.jacobw.recipe.generation.ui.display.GenerationRecipeLoadingLayout
 
 @Composable
 fun GenerationLoadingScreen(
@@ -18,5 +17,5 @@ fun GenerationLoadingScreen(
         generatedRecipeId?.let(onRecipeGenerated)
     }
 
-    GenerationRecipeLoadingLayout()
+    GenerationLoadingLayout()
 }

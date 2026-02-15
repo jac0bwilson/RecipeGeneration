@@ -1,4 +1,4 @@
-package uk.jacobw.recipe.recipedisplay.ui
+package uk.jacobw.recipe.recipedisplay.ui.display
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -36,6 +36,11 @@ import org.jetbrains.compose.ui.tooling.preview.PreviewParameter
 import uk.jacobw.recipe.core.ui.component.Title
 import uk.jacobw.recipe.core.ui.theme.AppTheme
 import uk.jacobw.recipe.core.ui.theme.preview.ThemeProvider
+import uk.jacobw.recipe.recipedisplay.ui.DisplayDifficulty
+import uk.jacobw.recipe.recipedisplay.ui.DisplayDuration
+import uk.jacobw.recipe.recipedisplay.ui.DisplayIngredient
+import uk.jacobw.recipe.recipedisplay.ui.DisplayInstruction
+import uk.jacobw.recipe.recipedisplay.ui.DisplayRecipe
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

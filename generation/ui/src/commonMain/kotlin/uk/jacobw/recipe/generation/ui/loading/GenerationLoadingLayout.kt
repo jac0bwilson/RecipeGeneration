@@ -1,4 +1,4 @@
-package uk.jacobw.recipe.generation.ui.display
+package uk.jacobw.recipe.generation.ui.loading
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -18,7 +18,7 @@ import uk.jacobw.recipe.core.ui.theme.AppTheme
 import uk.jacobw.recipe.core.ui.theme.preview.ThemeProvider
 
 @Composable
-fun GenerationRecipeLoadingLayout() {
+fun GenerationLoadingLayout() {
     Scaffold { internalPadding ->
         Box(
             modifier = Modifier.fillMaxSize().padding(internalPadding),
@@ -38,10 +38,10 @@ fun GenerationRecipeLoadingLayout() {
 
 @Preview
 @Composable
-private fun GenerationRecipeLoadingLayoutPreview(
+private fun GenerationLoadingLayoutPreview(
     @PreviewParameter(ThemeProvider::class) darkTheme: Boolean,
 ) {
     AppTheme(darkTheme) {
-        GenerationRecipeLoadingLayout()
+        GenerationLoadingLayout()
     }
 }

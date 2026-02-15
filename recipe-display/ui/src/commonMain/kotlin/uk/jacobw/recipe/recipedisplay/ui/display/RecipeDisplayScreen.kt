@@ -1,4 +1,4 @@
-package uk.jacobw.recipe.recipedisplay.ui.generated
+package uk.jacobw.recipe.recipedisplay.ui.display
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -9,8 +9,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.material3.Text
+import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.jetbrains.compose.ui.tooling.preview.PreviewParameter
 import org.koin.compose.viewmodel.koinViewModel
-import uk.jacobw.recipe.recipedisplay.ui.RecipeDisplayLayout
+import uk.jacobw.recipe.core.ui.theme.AppTheme
+import uk.jacobw.recipe.core.ui.theme.preview.ThemeProvider
+import uk.jacobw.recipe.recipedisplay.ui.toUiModel
 
 @Composable
 fun RecipeDisplayScreen(
@@ -48,5 +52,15 @@ private fun RecipeNotFoundLayout() {
     ) {
         Text("Recipe not found")
         Text("Tap Back to return")
+    }
+}
+
+@Preview
+@Composable
+private fun RecipeNotFoundLayoutPreview(
+    @PreviewParameter(ThemeProvider::class) darkTheme: Boolean,
+) {
+    AppTheme(darkTheme) {
+        RecipeNotFoundLayout()
     }
 }

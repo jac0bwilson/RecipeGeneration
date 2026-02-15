@@ -1,4 +1,4 @@
-package uk.jacobw.recipe.recipedisplay.ui.generated
+package uk.jacobw.recipe.recipedisplay.ui.display
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel

@@ -1,15 +1,10 @@
-package uk.jacobw.recipe.recipedisplay.ui.generated
+package uk.jacobw.recipe.recipedisplay.ui
 
 import uk.jacobw.recipe.recipedisplay.domain.model.Difficulty
 import uk.jacobw.recipe.recipedisplay.domain.model.Duration
 import uk.jacobw.recipe.recipedisplay.domain.model.Ingredient
 import uk.jacobw.recipe.recipedisplay.domain.model.Instruction
 import uk.jacobw.recipe.recipedisplay.domain.model.Recipe
-import uk.jacobw.recipe.recipedisplay.ui.DisplayDifficulty
-import uk.jacobw.recipe.recipedisplay.ui.DisplayDuration
-import uk.jacobw.recipe.recipedisplay.ui.DisplayIngredient
-import uk.jacobw.recipe.recipedisplay.ui.DisplayInstruction
-import uk.jacobw.recipe.recipedisplay.ui.DisplayRecipe
 
 internal fun Recipe.toUiModel(): DisplayRecipe =
     DisplayRecipe(
