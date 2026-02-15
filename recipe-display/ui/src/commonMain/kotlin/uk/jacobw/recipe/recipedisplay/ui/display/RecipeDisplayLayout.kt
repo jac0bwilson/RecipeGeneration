@@ -40,7 +40,6 @@ import org.jetbrains.compose.ui.tooling.preview.PreviewParameter
 import recipegeneration.core.ui.generated.resources.arrow_back_icon
 import recipegeneration.core.ui.generated.resources.favourite_filled_icon
 import recipegeneration.core.ui.generated.resources.favourite_icon
-import recipegeneration.core.ui.generated.resources.Res as CoreRes
 import recipegeneration.recipe_display.ui.generated.resources.Res
 import recipegeneration.recipe_display.ui.generated.resources.brain_icon
 import recipegeneration.recipe_display.ui.generated.resources.chat_icon
@@ -68,6 +67,7 @@ import uk.jacobw.recipe.recipedisplay.ui.DisplayDuration
 import uk.jacobw.recipe.recipedisplay.ui.DisplayIngredient
 import uk.jacobw.recipe.recipedisplay.ui.DisplayInstruction
 import uk.jacobw.recipe.recipedisplay.ui.DisplayRecipe
+import recipegeneration.core.ui.generated.resources.Res as CoreRes
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

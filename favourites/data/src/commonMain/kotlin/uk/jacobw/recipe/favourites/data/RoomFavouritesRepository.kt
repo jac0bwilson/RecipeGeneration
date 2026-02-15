@@ -118,8 +118,7 @@ class RoomFavouritesRepository(
                 ),
         )
 
-    private fun RecipeData.contentHash(): String =
-        canonicalPayload().sha256Hex()
+    private fun RecipeData.contentHash(): String = canonicalPayload().sha256Hex()
 
     private fun RecipeData.canonicalPayload(): String =
         buildString {

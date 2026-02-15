@@ -20,12 +20,10 @@ import org.koin.compose.KoinMultiplatformApplication
 import org.koin.core.annotation.KoinExperimentalAPI
 import org.koin.dsl.KoinConfiguration
 import org.koin.ksp.generated.module
-import recipegeneration.composeapp.generated.resources.Res as ComposeAppRes
 import recipegeneration.composeapp.generated.resources.tab_favourites_icon_content_description
 import recipegeneration.composeapp.generated.resources.tab_favourites_label
 import recipegeneration.composeapp.generated.resources.tab_generation_icon_content_description
 import recipegeneration.composeapp.generated.resources.tab_generation_label
-import recipegeneration.core.ui.generated.resources.Res as CoreRes
 import recipegeneration.core.ui.generated.resources.favourite_icon
 import recipegeneration.core.ui.generated.resources.wand_stars_icon
 import uk.jacobw.recipe.core.ui.theme.AppTheme
@@ -39,6 +37,8 @@ import uk.jacobw.recipe.recipedisplay.ui.RecipeDisplayRoutes
 import uk.jacobw.recipe.recipedisplay.ui.RecipeDisplaySource
 import uk.jacobw.recipe.recipedisplay.ui.getRecipeDisplayUiModules
 import uk.jacobw.recipe.recipedisplay.ui.recipeDisplayGraph
+import recipegeneration.composeapp.generated.resources.Res as ComposeAppRes
+import recipegeneration.core.ui.generated.resources.Res as CoreRes
 
 private enum class RootTab {
     GENERATION,

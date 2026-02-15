@@ -26,7 +26,7 @@ fun NavGraphBuilder.generationGraph(
 
         composable<GenerationRoutes.Loading> {
             GenerationLoadingScreen(
-                onRecipeGenerated = { recipeId ->
+                onGenerationComplete = { recipeId ->
                     navController.popBackStack()
                     onGeneratedRecipeCreated(recipeId)
                 },

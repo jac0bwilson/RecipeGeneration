@@ -1,7 +1,6 @@
 package uk.jacobw.recipe.favourites.data
 
-internal fun String.sha256Hex(): String =
-    encodeToByteArray().sha256().toHexString()
+internal fun String.sha256Hex(): String = encodeToByteArray().sha256().toHexString()
 
 private fun ByteArray.sha256(): ByteArray {
     val messageBitLength = size.toLong() * 8L
@@ -32,9 +31,9 @@ private fun ByteArray.sha256(): ByteArray {
             val offset = chunkStart + (index * 4)
             schedule[index] =
                 ((padded[offset].toInt() and 0xff) shl 24) or
-                    ((padded[offset + 1].toInt() and 0xff) shl 16) or
-                    ((padded[offset + 2].toInt() and 0xff) shl 8) or
-                    (padded[offset + 3].toInt() and 0xff)
+                ((padded[offset + 1].toInt() and 0xff) shl 16) or
+                ((padded[offset + 2].toInt() and 0xff) shl 8) or
+                (padded[offset + 3].toInt() and 0xff)
         }
 
         for (index in 16 until 64) {
@@ -88,26 +87,25 @@ private fun ByteArray.sha256(): ByteArray {
     )
 }
 
-private fun Int.rotate(bits: Int): Int =
-    (this ushr bits) or (this shl (32 - bits))
+private fun Int.rotate(bits: Int): Int = (this ushr bits) or (this shl (32 - bits))
 
-private fun Int.choose(y: Int, z: Int): Int =
-    (this and y) xor (this.inv() and z)
+private fun Int.choose(
+    y: Int,
+    z: Int,
+): Int = (this and y) xor (this.inv() and z)
 
-private fun Int.majority(y: Int, z: Int): Int =
-    (this and y) xor (this and z) xor (y and z)
+private fun Int.majority(
+    y: Int,
+    z: Int,
+): Int = (this and y) xor (this and z) xor (y and z)
 
-private fun Int.bigSigma0(): Int =
-    rotate(2) xor rotate(13) xor rotate(22)
+private fun Int.bigSigma0(): Int = rotate(2) xor rotate(13) xor rotate(22)
 
-private fun Int.bigSigma1(): Int =
-    rotate(6) xor rotate(11) xor rotate(25)
+private fun Int.bigSigma1(): Int = rotate(6) xor rotate(11) xor rotate(25)
 
-private fun Int.smallSigma0(): Int =
-    rotate(7) xor rotate(18) xor (this ushr 3)
+private fun Int.smallSigma0(): Int = rotate(7) xor rotate(18) xor (this ushr 3)
 
-private fun Int.smallSigma1(): Int =
-    rotate(17) xor rotate(19) xor (this ushr 10)
+private fun Int.smallSigma1(): Int = rotate(17) xor rotate(19) xor (this ushr 10)
 
 private fun Int.toBigEndianBytes(): ByteArray =
     byteArrayOf(

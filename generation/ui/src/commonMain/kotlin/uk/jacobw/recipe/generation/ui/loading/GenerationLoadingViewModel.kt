@@ -17,10 +17,11 @@ class GenerationLoadingViewModel(
 ) : ViewModel() {
     private val prompt = savedStateHandle.toRoute<GenerationRoutes.Loading>().recipePrompt
 
-    val generatedRecipeId = generateAndStoreRecipe(prompt)
-        .stateIn(
-            scope = viewModelScope,
-            started = WhileSubscribed(5_000),
-            initialValue = null,
-        )
+    val generatedRecipeId =
+        generateAndStoreRecipe(prompt)
+            .stateIn(
+                scope = viewModelScope,
+                started = WhileSubscribed(5_000),
+                initialValue = null,
+            )
 }

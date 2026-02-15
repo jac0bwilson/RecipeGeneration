@@ -8,9 +8,7 @@ import kotlinx.serialization.Serializable
 import uk.jacobw.recipe.core.ui.navigation.NavigationRoute
 import uk.jacobw.recipe.recipedisplay.ui.display.RecipeDisplayScreen
 
-fun NavGraphBuilder.recipeDisplayGraph(
-    navController: NavController,
-) {
+fun NavGraphBuilder.recipeDisplayGraph(navController: NavController) {
     navigation<RecipeDisplayRoutes.Root>(
         startDestination = RecipeDisplayRoutes.Entry,
     ) {

@@ -29,7 +29,6 @@ import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.jetbrains.compose.ui.tooling.preview.PreviewParameter
-import recipegeneration.core.ui.generated.resources.Res as CoreRes
 import recipegeneration.core.ui.generated.resources.favourite_filled_icon
 import recipegeneration.favourites.ui.generated.resources.Res
 import recipegeneration.favourites.ui.generated.resources.favourites_empty_description
@@ -40,12 +39,13 @@ import recipegeneration.favourites.ui.generated.resources.favourites_title
 import uk.jacobw.recipe.core.ui.component.Title
 import uk.jacobw.recipe.core.ui.theme.AppTheme
 import uk.jacobw.recipe.core.ui.theme.preview.ThemeProvider
+import recipegeneration.core.ui.generated.resources.Res as CoreRes
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun FavouritesListLayout(
     favourites: List<FavouriteListItem>,
-    onRecipeSelected: (String) -> Unit,
+    onRecipeSelect: (String) -> Unit,
     onRemoveFavourite: (String) -> Unit,
 ) {
     Scaffold(
@@ -68,7 +68,7 @@ internal fun FavouritesListLayout(
             )
 
             Column(
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier.fillMaxSize(),
             ) {
                 if (favourites.isEmpty()) {
                     EmptyFavourites()
@@ -83,7 +83,7 @@ internal fun FavouritesListLayout(
                     verticalArrangement = Arrangement.spacedBy(12.dp),
                 ) {
                     items(favourites, key = { it.contentHash }) { favourite ->
-                        FavouriteRecipe(favourite, onRecipeSelected, onRemoveFavourite)
+                        FavouriteRecipe(favourite, onRecipeSelect, onRemoveFavourite)
                     }
                 }
             }
@@ -94,15 +94,15 @@ internal fun FavouritesListLayout(
 @Composable
 private fun FavouriteRecipe(
     favourite: FavouriteListItem,
-    onRecipeSelected: (String) -> Unit,
-    onRemoveFavourite: (String) -> Unit
+    onRecipeSelect: (String) -> Unit,
+    onRemoveFavourite: (String) -> Unit,
 ) {
     Card(
         modifier =
             Modifier
                 .fillMaxWidth()
                 .clickable {
-                    onRecipeSelected(favourite.contentHash)
+                    onRecipeSelect(favourite.contentHash)
                 },
     ) {
         Row(
@@ -135,7 +135,7 @@ private fun FavouriteRecipe(
                 Icon(
                     painter = painterResource(CoreRes.drawable.favourite_filled_icon),
                     contentDescription = stringResource(Res.string.favourites_remove),
-                    tint = MaterialTheme.colorScheme.primary
+                    tint = MaterialTheme.colorScheme.primary,
                 )
             }
         }
@@ -185,7 +185,7 @@ private fun FavouritesListLayoutPopulatedPreview(
                         servings = 4,
                     ),
                 ),
-            onRecipeSelected = {},
+            onRecipeSelect = {},
             onRemoveFavourite = {},
         )
     }
@@ -199,7 +199,7 @@ private fun FavouritesListLayoutEmptyPreview(
     AppTheme(darkTheme) {
         FavouritesListLayout(
             favourites = emptyList(),
-            onRecipeSelected = {},
+            onRecipeSelect = {},
             onRemoveFavourite = {},
         )
     }

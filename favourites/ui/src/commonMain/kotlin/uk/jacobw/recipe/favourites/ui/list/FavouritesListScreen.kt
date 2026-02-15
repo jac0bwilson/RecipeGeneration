@@ -6,14 +6,14 @@ import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun FavouritesListScreen(
-    onRecipeSelected: (String) -> Unit,
+    onSelectRecipe: (String) -> Unit,
     viewModel: FavouritesListViewModel = koinViewModel(),
 ) {
     val favourites = viewModel.favourites.collectAsStateWithLifecycle().value
 
     FavouritesListLayout(
         favourites = favourites,
-        onRecipeSelected = onRecipeSelected,
+        onRecipeSelect = onSelectRecipe,
         onRemoveFavourite = viewModel::removeFavouriteRecipe,
     )
 }

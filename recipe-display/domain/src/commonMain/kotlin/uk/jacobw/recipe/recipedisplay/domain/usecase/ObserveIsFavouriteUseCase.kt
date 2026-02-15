@@ -9,6 +9,5 @@ import uk.jacobw.recipe.recipedisplay.domain.model.Recipe
 class ObserveIsFavouriteUseCase(
     private val favouritesRepository: FavouritesRepository,
 ) {
-    operator fun invoke(recipe: Recipe): Flow<Boolean> =
-        favouritesRepository.observeIsFavourite(recipe.toFavouriteData())
+    operator fun invoke(recipe: Recipe): Flow<Boolean> = favouritesRepository.observeIsFavourite(recipe.toFavouriteData())
 }
