@@ -24,6 +24,7 @@ ksp = "2.3.0"
 ktlint = "14.0.1"
 ktlint-rules-compose = "0.5.3"
 turbine = "1.2.1"
+okio = "3.9.0"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -39,6 +40,7 @@ androidx-lifecycle-runtimeCompose = { module = "org.jetbrains.androidx.lifecycle
 compose-navigation = { group = "org.jetbrains.androidx.navigation", name = "navigation-compose", version.ref = "compose-navigation" }
 coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
 coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
+okio = { module = "com.squareup.okio:okio", version.ref = "okio" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serializationJson" }
 ktlint-ruleset-compose = { module = "io.nlopez.compose.rules:ktlint", version.ref = "ktlint-rules-compose" }
 koin-annotations = { module = "io.insert-koin:koin-annotations", version.ref = "koin-annotaions" }
