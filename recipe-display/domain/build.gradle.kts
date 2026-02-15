@@ -1,8 +1,6 @@
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
-    alias(libs.plugins.serialization)
-    id("compose-convention")
     id("ktlint-convention")
     id("koin-convention")
 }
@@ -15,21 +13,21 @@ kotlin {
         iosSimulatorArm64(),
     ).forEach { iosTarget ->
         iosTarget.binaries.framework {
-            baseName = "RecipeDisplayUI"
+            baseName = "RecipeDisplayDomain"
             isStatic = true
         }
     }
 
     sourceSets {
         commonMain.dependencies {
-            implementation(project(":core:ui"))
-            implementation(project(":recipe-display:domain"))
+            implementation(project(":favourites:data"))
+            implementation(project(":generation:data"))
         }
     }
 }
 
 android {
-    namespace = "uk.jacobw.recipe.recipedisplay.ui"
+    namespace = "uk.jacobw.recipe.recipedisplay.domain"
     compileSdk =
         libs.versions.android.compileSdk
             .get()

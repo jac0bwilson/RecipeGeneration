@@ -36,6 +36,7 @@ include(":generation:ui")
 include(":generation:domain")
 include(":generation:data")
 
+include(":recipe-display:domain")
 include(":recipe-display:ui")
 
 include(":favourites:data")

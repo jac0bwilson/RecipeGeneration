@@ -14,6 +14,6 @@ fun FavouritesListScreen(
     FavouritesListLayout(
         favourites = favourites,
         onRecipeSelected = onRecipeSelected,
-        onRemoveFavourite = viewModel::removeFavourite,
+        onRemoveFavourite = viewModel::removeFavouriteRecipe,
     )
 }

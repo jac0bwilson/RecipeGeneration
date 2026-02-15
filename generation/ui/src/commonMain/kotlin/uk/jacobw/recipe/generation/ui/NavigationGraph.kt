@@ -1,6 +1,5 @@
 package uk.jacobw.recipe.generation.ui
 
-import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
@@ -8,10 +7,11 @@ import androidx.navigation.compose.navigation
 import kotlinx.serialization.Serializable
 import uk.jacobw.recipe.core.ui.navigation.NavigationRoute
 import uk.jacobw.recipe.generation.ui.input.InputScreen
+import uk.jacobw.recipe.generation.ui.loading.GenerationLoadingScreen
 
 fun NavGraphBuilder.generationGraph(
     navController: NavController,
-    generatedRecipeScreen: @Composable (onBackClick: () -> Unit) -> Unit,
+    onGeneratedRecipeCreated: (String) -> Unit,
 ) {
     navigation<GenerationRoutes.Root>(
         startDestination = GenerationRoutes.Input,
@@ -19,15 +19,18 @@ fun NavGraphBuilder.generationGraph(
         composable<GenerationRoutes.Input> {
             InputScreen(
                 submitPrompt = { prompt ->
-                    navController.navigate(GenerationRoutes.RecipeDisplay(prompt))
+                    navController.navigate(GenerationRoutes.Loading(prompt))
                 },
             )
         }
 
-        composable<GenerationRoutes.RecipeDisplay> {
-            generatedRecipeScreen {
-                navController.popBackStack()
-            }
+        composable<GenerationRoutes.Loading> {
+            GenerationLoadingScreen(
+                onRecipeGenerated = { recipeId ->
+                    navController.popBackStack()
+                    onGeneratedRecipeCreated(recipeId)
+                },
+            )
         }
     }
 }
@@ -40,7 +43,7 @@ sealed class GenerationRoutes : NavigationRoute {
     data object Input : GenerationRoutes()
 
     @Serializable
-    data class RecipeDisplay(
+    data class Loading(
         val recipePrompt: String,
     ) : GenerationRoutes()
 }

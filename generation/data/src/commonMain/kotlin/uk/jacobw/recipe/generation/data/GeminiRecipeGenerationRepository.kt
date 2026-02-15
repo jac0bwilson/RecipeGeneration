@@ -10,10 +10,10 @@ import org.koin.core.annotation.Single
 import uk.jacobw.recipe.generation.data.model.RecipeOutput
 
 @Single
-class GeneratedRecipeRepository(
+class GeminiRecipeGenerationRepository(
     private val promptExecutor: PromptExecutor,
-) : RecipeRepository {
-    override fun fetchRecipe(userPrompt: String): Flow<RecipeOutput> =
+) : RecipeGenerationRepository {
+    override fun generateRecipe(userPrompt: String): Flow<RecipeOutput> =
         flow {
             promptExecutor
                 .executeStructured<RecipeOutput>(

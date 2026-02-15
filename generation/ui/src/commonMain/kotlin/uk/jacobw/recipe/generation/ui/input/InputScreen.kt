@@ -26,7 +26,10 @@ fun InputScreen(
         inputState = uiState.prompt,
         submitButtonEnabled = uiState.isPromptValid,
         onSubmitInput = {
-            submitPrompt(uiState.prompt.text.toString())
+            val prompt = uiState.prompt.text.toString()
+            if (prompt.isNotBlank()) {
+                submitPrompt(prompt)
+            }
         },
     )
 }

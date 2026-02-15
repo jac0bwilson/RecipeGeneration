@@ -6,29 +6,24 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import org.koin.android.annotation.KoinViewModel
-import uk.jacobw.recipe.favourites.domain.model.SavedRecipe
 import uk.jacobw.recipe.favourites.domain.usecase.ObserveFavouritesUseCase
 import uk.jacobw.recipe.favourites.domain.usecase.RemoveFavouriteUseCase
 
 @KoinViewModel
 class FavouritesListViewModel(
-    observeFavouritesUseCase: ObserveFavouritesUseCase,
-    private val removeFavouriteUseCase: RemoveFavouriteUseCase,
+    private val observeFavourites: ObserveFavouritesUseCase,
+    private val removeFavourite: RemoveFavouriteUseCase,
 ) : ViewModel() {
     val favourites =
-        observeFavouritesUseCase().stateIn(
+        observeFavourites().stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5_000),
             initialValue = emptyList(),
         )
 
-    fun removeFavourite(contentHash: String) {
+    fun removeFavouriteRecipe(contentHash: String) {
         viewModelScope.launch {
-            removeFavouriteUseCase(contentHash)
+            removeFavourite(contentHash)
         }
     }
 }
-
-internal data class FavouritesListUiState(
-    val favourites: List<SavedRecipe> = emptyList(),
-)
