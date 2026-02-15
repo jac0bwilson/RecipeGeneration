@@ -1,5 +1,10 @@
 package uk.jacobw.recipe
 
+import androidx.compose.animation.AnimatedContentTransitionScope
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.ime
@@ -17,6 +22,8 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalDensity
+import androidx.navigation.NavBackStackEntry
+import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import org.jetbrains.compose.resources.painterResource
@@ -50,7 +57,7 @@ private enum class RootTab {
     FAVOURITES,
 }
 
-@OptIn(KoinExperimentalAPI::class)
+@OptIn(KoinExperimentalAPI::class, ExperimentalAnimationApi::class)
 @Composable
 fun App() {
     KoinMultiplatformApplication(
@@ -129,6 +136,40 @@ fun App() {
                         Modifier
                             .fillMaxSize()
                             .padding(innerPadding),
+                    enterTransition = {
+                        when {
+                            initialState.isGenerationTab() && targetState.isFavouritesTab() ->
+                                slideIntoContainer(
+                                    towards = AnimatedContentTransitionScope.SlideDirection.Left,
+                                    animationSpec = tween(250),
+                                )
+
+                            initialState.isFavouritesTab() && targetState.isGenerationTab() ->
+                                slideIntoContainer(
+                                    towards = AnimatedContentTransitionScope.SlideDirection.Right,
+                                    animationSpec = tween(250),
+                                )
+
+                            else -> EnterTransition.None
+                        }
+                    },
+                    exitTransition = {
+                        when {
+                            initialState.isGenerationTab() && targetState.isFavouritesTab() ->
+                                slideOutOfContainer(
+                                    towards = AnimatedContentTransitionScope.SlideDirection.Left,
+                                    animationSpec = tween(250),
+                                )
+
+                            initialState.isFavouritesTab() && targetState.isGenerationTab() ->
+                                slideOutOfContainer(
+                                    towards = AnimatedContentTransitionScope.SlideDirection.Right,
+                                    animationSpec = tween(250),
+                                )
+
+                            else -> ExitTransition.None
+                        }
+                    },
                 ) {
                     generationGraph(
                         navController = navController,
@@ -163,3 +204,12 @@ fun App() {
         }
     }
 }
+
+private fun NavBackStackEntry.isGenerationTab(): Boolean =
+    destination.hasRoute<GenerationRoutes.Root>() ||
+        destination.hasRoute<GenerationRoutes.Input>() ||
+        destination.hasRoute<GenerationRoutes.Loading>()
+
+private fun NavBackStackEntry.isFavouritesTab(): Boolean =
+    destination.hasRoute<FavouritesRoutes.Root>() ||
+        destination.hasRoute<FavouritesRoutes.List>()

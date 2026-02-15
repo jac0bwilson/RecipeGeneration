@@ -130,10 +130,10 @@ fun RecipeDisplayLayout(
         Column(
             modifier =
                 Modifier
+                    .verticalScroll(scrollState)
                     .padding(internalPadding)
                     .padding(16.dp)
-                    .fillMaxSize()
-                    .verticalScroll(scrollState),
+                    .fillMaxSize(),
             verticalArrangement = Arrangement.spacedBy(24.dp),
         ) {
             HeadingSection(recipe.title)
