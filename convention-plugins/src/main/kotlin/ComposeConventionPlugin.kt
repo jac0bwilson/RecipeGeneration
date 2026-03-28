@@ -1,6 +1,7 @@
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.artifacts.VersionCatalogsExtension
+import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.getByType
 import org.jetbrains.compose.ComposeExtension
@@ -14,17 +15,28 @@ class ComposeConventionPlugin : Plugin<Project> {
 
             val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
 
-            extensions.getByType<KotlinMultiplatformExtension>().sourceSets.getByName("commonMain").dependencies {
-                implementation(libs.findLibrary("compose.runtime").get())
-                implementation(libs.findLibrary("compose.foundation").get())
-                implementation(libs.findLibrary("compose.material3").get())
-                implementation(libs.findLibrary("compose.ui").get())
-                implementation(libs.findLibrary("compose.components.resources").get())
-                implementation(libs.findLibrary("compose.ui.tooling.preview").get())
-                implementation(libs.findLibrary("compose.navigation").get())
+            extensions.configure<KotlinMultiplatformExtension> {
+                sourceSets.getByName("commonMain").dependencies {
+                    implementation(libs.findLibrary("compose.runtime").get())
+                    implementation(libs.findLibrary("compose.foundation").get())
+                    implementation(libs.findLibrary("compose.material3").get())
+                    implementation(libs.findLibrary("compose.ui").get())
+                    implementation(libs.findLibrary("compose.components.resources").get())
+                    implementation(libs.findLibrary("compose.ui.tooling.preview").get())
+                    implementation(libs.findLibrary("compose.navigation").get())
 
-                implementation(libs.findLibrary("androidx.lifecycle.viewmodelCompose").get())
-                implementation(libs.findLibrary("androidx.lifecycle.runtimeCompose").get())
+                    implementation(libs.findLibrary("androidx.lifecycle.viewmodelCompose").get())
+                    implementation(libs.findLibrary("androidx.lifecycle.runtimeCompose").get())
+                }
+
+                // Safely add ui-tooling dependency to androidMain when it becomes available
+                sourceSets.configureEach {
+                    if (name == "androidMain") {
+                        dependencies {
+                            implementation(libs.findLibrary("compose.ui.tooling").get())
+                        }
+                    }
+                }
             }
         }
     }
