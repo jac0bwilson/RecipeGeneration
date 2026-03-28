@@ -12,21 +12,19 @@ class ComposeConventionPlugin : Plugin<Project> {
             pluginManager.apply("org.jetbrains.compose")
             pluginManager.apply("org.jetbrains.kotlin.plugin.compose")
 
-            val compose = extensions.getByType<ComposeExtension>().dependencies
             val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
 
             extensions.getByType<KotlinMultiplatformExtension>().sourceSets.getByName("commonMain").dependencies {
-                implementation(compose.runtime)
-                implementation(compose.foundation)
-                implementation(compose.material3)
-                implementation(compose.ui)
-                implementation(compose.components.resources)
-                implementation(compose.components.uiToolingPreview)
+                implementation(libs.findLibrary("compose.runtime").get())
+                implementation(libs.findLibrary("compose.foundation").get())
+                implementation(libs.findLibrary("compose.material3").get())
+                implementation(libs.findLibrary("compose.ui").get())
+                implementation(libs.findLibrary("compose.components.resources").get())
+                implementation(libs.findLibrary("compose.ui.tooling.preview").get())
                 implementation(libs.findLibrary("compose.navigation").get())
-            }
 
-            dependencies {
-                add("debugImplementation", compose.uiTooling)
+                implementation(libs.findLibrary("androidx.lifecycle.viewmodelCompose").get())
+                implementation(libs.findLibrary("androidx.lifecycle.runtimeCompose").get())
             }
         }
     }

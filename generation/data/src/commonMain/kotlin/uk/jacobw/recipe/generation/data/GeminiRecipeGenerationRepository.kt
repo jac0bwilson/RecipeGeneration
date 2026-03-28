@@ -3,7 +3,7 @@ package uk.jacobw.recipe.generation.data
 import ai.koog.prompt.dsl.prompt
 import ai.koog.prompt.executor.clients.google.GoogleModels
 import ai.koog.prompt.executor.model.PromptExecutor
-import ai.koog.prompt.structure.executeStructured
+import ai.koog.prompt.executor.model.executeStructured
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import org.koin.core.annotation.Single
