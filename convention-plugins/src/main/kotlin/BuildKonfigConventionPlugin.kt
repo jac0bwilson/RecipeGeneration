@@ -20,7 +20,7 @@ class BuildKonfigConventionPlugin : Plugin<Project> {
             }
 
             extensions.getByType<BuildKonfigExtension>().apply {
-                packageName = "uk.jacobw.recipe"
+                packageName.set("uk.jacobw.recipe")
 
                 defaultConfigs {
                     val geminiKey: String = localProperties.getProperty("GEMINI_API_KEY")
