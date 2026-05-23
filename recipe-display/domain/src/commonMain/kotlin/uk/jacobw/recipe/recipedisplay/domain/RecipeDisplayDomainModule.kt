@@ -2,11 +2,14 @@ package uk.jacobw.recipe.recipedisplay.domain
 
 import org.koin.core.annotation.ComponentScan
 import org.koin.core.annotation.Module
-import org.koin.ksp.generated.module
-import org.koin.core.module.Module as KoinModule
+import uk.jacobw.recipe.favourites.data.FavouritesDataModule
+import uk.jacobw.recipe.generation.data.GenerationDataModule
 
 @ComponentScan
-@Module
+@Module(
+    includes = [
+        FavouritesDataModule::class,
+        GenerationDataModule::class,
+    ],
+)
 class RecipeDisplayDomainModule
-
-fun getRecipeDisplayDomainModules(): List<KoinModule> = listOf(RecipeDisplayDomainModule().module)

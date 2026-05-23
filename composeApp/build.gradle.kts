@@ -48,8 +48,13 @@ kotlin {
             implementation(libs.androidx.lifecycle.runtimeCompose)
 
             implementation(project(":core:ui"))
+            implementation(project(":favourites:data"))
+            implementation(project(":favourites:domain"))
             implementation(project(":favourites:ui"))
+            implementation(project(":generation:data"))
+            implementation(project(":generation:domain"))
             implementation(project(":generation:ui"))
+            implementation(project(":recipe-display:domain"))
             implementation(project(":recipe-display:ui"))
         }
         commonTest.dependencies {

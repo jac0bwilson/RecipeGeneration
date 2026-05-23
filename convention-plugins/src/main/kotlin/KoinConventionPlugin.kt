@@ -8,42 +8,15 @@ import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 class KoinConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
-            pluginManager.apply("com.google.devtools.ksp")
-
             val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
+
+            pluginManager.apply(libs.findPlugin("koin.compiler").get().get().pluginId)
 
             extensions.getByType<KotlinMultiplatformExtension>().sourceSets.getByName("commonMain").dependencies {
                 implementation(libs.findLibrary("koin.annotations").get())
                 implementation(dependencies.platform(libs.findLibrary("koin.bom").get()))
                 implementation(libs.findLibrary("koin.compose").get())
                 implementation(libs.findLibrary("koin.compose.viewmodel").get())
-            }
-
-            val kmp = extensions.getByType<KotlinMultiplatformExtension>()
-            val commonMain = kmp.sourceSets.getByName("commonMain")
-            commonMain.kotlin.srcDir("build/generated/ksp/metadata/commonMain/kotlin/org/koin/ksp/generated")
-
-            val koinKspCompiler = libs.findLibrary("koin.ksp.compiler").get()
-
-            afterEvaluate {
-                tasks.configureEach {
-                    val taskName = name
-                    if (
-                        taskName != "kspCommonMainKotlinMetadata" &&
-                        (
-                            taskName.startsWith("ksp") ||
-                                taskName == "compileAndroidMain" ||
-                                taskName == "compileAndroidHostTest" ||
-                                taskName.startsWith("compileKotlin")
-                        )
-                    ) {
-                        dependsOn("kspCommonMainKotlinMetadata")
-                    }
-                }
-
-                configurations.matching { it.name.startsWith("ksp") && it.name != "ksp" }.forEach { config ->
-                    dependencies.add(config.name, koinKspCompiler)
-                }
             }
         }
     }

@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import org.koin.android.annotation.KoinViewModel
+import org.koin.core.annotation.KoinViewModel
 import uk.jacobw.recipe.recipedisplay.domain.model.RecipeReference
 import uk.jacobw.recipe.recipedisplay.domain.usecase.ObserveIsFavouriteUseCase
 import uk.jacobw.recipe.recipedisplay.domain.usecase.ObserveRecipeUseCase

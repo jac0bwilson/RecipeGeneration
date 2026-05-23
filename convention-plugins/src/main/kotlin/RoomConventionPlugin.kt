@@ -9,9 +9,11 @@ import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 class RoomConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
-            pluginManager.apply("androidx.room")
-
             val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
+
+            pluginManager.apply(libs.findPlugin("ksp").get().get().pluginId)
+            pluginManager.apply(libs.findPlugin("room").get().get().pluginId)
+
             val kotlinMultiplatform = extensions.getByType<KotlinMultiplatformExtension>()
 
             kotlinMultiplatform.sourceSets.getByName("commonMain").dependencies {

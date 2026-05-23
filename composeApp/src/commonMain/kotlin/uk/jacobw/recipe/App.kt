@@ -28,10 +28,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
-import org.koin.compose.KoinMultiplatformApplication
-import org.koin.core.annotation.KoinExperimentalAPI
-import org.koin.dsl.KoinConfiguration
-import org.koin.ksp.generated.module
+import org.koin.compose.KoinApplication
+import org.koin.core.annotation.KoinApplication
+import org.koin.plugin.module.dsl.koinConfiguration
 import recipegeneration.composeapp.generated.resources.tab_favourites_icon_content_description
 import recipegeneration.composeapp.generated.resources.tab_favourites_label
 import recipegeneration.composeapp.generated.resources.tab_generation_icon_content_description
@@ -40,14 +39,14 @@ import recipegeneration.core.ui.generated.resources.favourite_icon
 import recipegeneration.core.ui.generated.resources.wand_stars_icon
 import uk.jacobw.recipe.core.ui.theme.AppTheme
 import uk.jacobw.recipe.favourites.ui.FavouritesRoutes
+import uk.jacobw.recipe.favourites.ui.FavouritesUiModule
 import uk.jacobw.recipe.favourites.ui.favouritesGraph
-import uk.jacobw.recipe.favourites.ui.getFavouritesUiModules
 import uk.jacobw.recipe.generation.ui.GenerationRoutes
+import uk.jacobw.recipe.generation.ui.GenerationUiModule
 import uk.jacobw.recipe.generation.ui.generationGraph
-import uk.jacobw.recipe.generation.ui.getGenerationUiModules
 import uk.jacobw.recipe.recipedisplay.ui.RecipeDisplayRoutes
 import uk.jacobw.recipe.recipedisplay.ui.RecipeDisplaySource
-import uk.jacobw.recipe.recipedisplay.ui.getRecipeDisplayUiModules
+import uk.jacobw.recipe.recipedisplay.ui.RecipeDisplayUiModule
 import uk.jacobw.recipe.recipedisplay.ui.recipeDisplayGraph
 import recipegeneration.composeapp.generated.resources.Res as ComposeAppRes
 import recipegeneration.core.ui.generated.resources.Res as CoreRes
@@ -57,16 +56,20 @@ private enum class RootTab {
     FAVOURITES,
 }
 
-@OptIn(KoinExperimentalAPI::class, ExperimentalAnimationApi::class)
+@KoinApplication(
+    modules = [
+        FavouritesUiModule::class,
+        GenerationUiModule::class,
+        RecipeDisplayUiModule::class,
+    ],
+)
+object RecipeGenerationApp
+
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun App() {
-    KoinMultiplatformApplication(
-        config =
-            KoinConfiguration {
-                modules(
-                    AppModule().module + getGenerationUiModules() + getFavouritesUiModules() + getRecipeDisplayUiModules(),
-                )
-            },
+    KoinApplication(
+        configuration = koinConfiguration<RecipeGenerationApp>(),
     ) {
         AppTheme {
             val navController = rememberNavController()

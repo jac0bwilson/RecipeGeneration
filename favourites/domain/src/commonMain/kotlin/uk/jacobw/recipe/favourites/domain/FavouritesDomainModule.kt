@@ -2,11 +2,8 @@ package uk.jacobw.recipe.favourites.domain
 
 import org.koin.core.annotation.ComponentScan
 import org.koin.core.annotation.Module
-import org.koin.ksp.generated.module
-import uk.jacobw.recipe.favourites.data.getFavouritesDataModules
+import uk.jacobw.recipe.favourites.data.FavouritesDataModule
 
 @ComponentScan
-@Module
+@Module(includes = [FavouritesDataModule::class])
 class FavouritesDomainModule
-
-fun getFavouritesDomainModules() = listOf(FavouritesDomainModule().module) + getFavouritesDataModules()

@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
 import kotlinx.coroutines.flow.SharingStarted.Companion.WhileSubscribed
 import kotlinx.coroutines.flow.stateIn
-import org.koin.android.annotation.KoinViewModel
+import org.koin.core.annotation.KoinViewModel
 import uk.jacobw.recipe.generation.domain.usecase.GenerateAndStoreRecipeUseCase
 import uk.jacobw.recipe.generation.ui.GenerationRoutes
 
