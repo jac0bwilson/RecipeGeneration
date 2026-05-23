@@ -1,6 +1,6 @@
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
-    alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.androidKotlinMultiplatformLibrary)
     alias(libs.plugins.serialization)
     id("ktlint-convention")
     id("koin-convention")
@@ -8,7 +8,17 @@ plugins {
 }
 
 kotlin {
-    androidTarget()
+    android {
+        namespace = "uk.jacobw.recipe.generation.data"
+        compileSdk =
+            libs.versions.android.compileSdk
+                .get()
+                .toInt()
+        minSdk =
+            libs.versions.android.minSdk
+                .get()
+                .toInt()
+    }
 
     listOf(
         iosArm64(),
@@ -24,19 +34,5 @@ kotlin {
         commonMain.dependencies {
             implementation(libs.koog)
         }
-    }
-}
-
-android {
-    namespace = "uk.jacobw.recipe.generation.data"
-    compileSdk =
-        libs.versions.android.compileSdk
-            .get()
-            .toInt()
-    defaultConfig {
-        minSdk =
-            libs.versions.android.minSdk
-                .get()
-                .toInt()
     }
 }

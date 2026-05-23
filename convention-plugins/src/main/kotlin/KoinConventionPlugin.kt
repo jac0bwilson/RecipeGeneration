@@ -27,13 +27,21 @@ class KoinConventionPlugin : Plugin<Project> {
 
             afterEvaluate {
                 tasks.configureEach {
-                    val name = name
-                    if (name.startsWith("ksp") && !name.contains("Metadata") && name.contains("Kotlin")) {
+                    val taskName = name
+                    if (
+                        taskName != "kspCommonMainKotlinMetadata" &&
+                        (
+                            taskName.startsWith("ksp") ||
+                                taskName == "compileAndroidMain" ||
+                                taskName == "compileAndroidHostTest" ||
+                                taskName.startsWith("compileKotlin")
+                        )
+                    ) {
                         dependsOn("kspCommonMainKotlinMetadata")
                     }
                 }
 
-                configurations.matching { it.name.startsWith("ksp") }.forEach { config ->
+                configurations.matching { it.name.startsWith("ksp") && it.name != "ksp" }.forEach { config ->
                     dependencies.add(config.name, koinKspCompiler)
                 }
             }

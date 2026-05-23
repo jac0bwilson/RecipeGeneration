@@ -1,13 +1,24 @@
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
-    alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.androidKotlinMultiplatformLibrary)
     alias(libs.plugins.serialization)
     id("ktlint-convention")
     id("koin-convention")
 }
 
 kotlin {
-    androidTarget()
+    android {
+        namespace = "uk.jacobw.recipe.generation.domain"
+        compileSdk =
+            libs.versions.android.compileSdk
+                .get()
+                .toInt()
+        minSdk =
+            libs.versions.android.minSdk
+                .get()
+                .toInt()
+        withHostTest {}
+    }
 
     listOf(
         iosArm64(),
@@ -28,19 +39,5 @@ kotlin {
             implementation(libs.kotlin.test)
             implementation(libs.turbine)
         }
-    }
-}
-
-android {
-    namespace = "uk.jacobw.recipe.generation.domain"
-    compileSdk =
-        libs.versions.android.compileSdk
-            .get()
-            .toInt()
-    defaultConfig {
-        minSdk =
-            libs.versions.android.minSdk
-                .get()
-                .toInt()
     }
 }
