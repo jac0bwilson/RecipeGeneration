@@ -33,6 +33,7 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             implementation(libs.koog)
+            implementation(libs.koog.executors)
         }
     }
 }
